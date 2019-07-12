@@ -6,15 +6,7 @@ pipeline {
             }
           }
     
-    stages {
-        stage('Checkout') {
-            steps {
-                echo 'Checking out..'
-                checkout scm
-                echo "My branch is: ${env.BRANCH_NAME}"
-            }
-        }
-        
+       
         
         stage('Build') {
             steps {
@@ -41,7 +33,7 @@ pipeline {
         
         stage('master-branch-stuff'){
             when{
-                branch 'homologacao'
+                branch 'origin/homologacao'
               }
               steps {
                 echo 'ENTROU NO TESTE DE BRANCH HOMOLOGACAO'
@@ -49,7 +41,7 @@ pipeline {
         }
         stage('Deploy PROD'){
             when{
-                branch 'master'
+                branch 'origin/master'
               }
               steps {
                 echo 'ENTROU NO TESTE DE BRANCH MASTER'
