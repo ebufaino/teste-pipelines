@@ -7,24 +7,13 @@ pipeline {
           }
     
     stages {
-        //stage('CheckOut') {
-          // steps {
-           //     checkout scm
-                //checkout([$class: 'GitSCM', branches: [[name: '**']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'sme-git-user', url: 'https://github.com/ebufaino/teste-pipelines.git']]])
-                //script{ 
-                //     def branch = sh(script: 'rev=$(git name-rev --name-only HEAD)', returnStdout: true)
-                //}     
-                //sh 'ls -la'
-            //    sh 'pwd'
-              //  sh 'git status'
-              //  sh 'git submodule update --init'
-                
-                
-              //  echo "My branch is: ${env.GIT_BRANCH}"
-                
-                
-            //   }
-        //}
+        stage('Checkout') {
+            steps {
+                echo 'Checking out..'
+                checkout scm
+                echo "My branch is: ${env.BRANCH_NAME}"
+            }
+        }
         
         
         stage('Build') {
