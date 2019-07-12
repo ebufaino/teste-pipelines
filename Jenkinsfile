@@ -9,8 +9,8 @@ pipeline {
     stages {
         stage('CheckOut') {
            steps {
-                
-                checkout([$class: 'GitSCM', branches: [[name: '**']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'sme-git-user', url: 'https://github.com/ebufaino/teste-pipelines.git']]])
+                checkout scm
+                //checkout([$class: 'GitSCM', branches: [[name: '**']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'sme-git-user', url: 'https://github.com/ebufaino/teste-pipelines.git']]])
                 //script{ 
                 //     def branch = sh(script: 'rev=$(git name-rev --name-only HEAD)', returnStdout: true)
                 //}     
