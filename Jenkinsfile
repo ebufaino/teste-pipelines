@@ -17,7 +17,7 @@ pipeline {
                 //sh 'ls -la'
                 sh 'pwd'
                 sh 'git status'
-                //sh 'git submodule update --init'
+                sh 'git submodule update --init'
                 
                 
                 echo "My branch is: ${env.GIT_BRANCH}"
