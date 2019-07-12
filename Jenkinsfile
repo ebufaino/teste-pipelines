@@ -33,7 +33,7 @@ pipeline {
         
         stage('master-branch-stuff'){
             when {
-                expression { BRANCH_NAME ==~ /(homologacao|staging)/ }
+                expression { GIT_BRANCH ==~ /(homologacao|staging)/ }
                 anyOf {
                     environment name: 'branch', value: 'homologacao'
                 }
