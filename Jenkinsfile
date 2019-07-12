@@ -31,6 +31,7 @@ pipeline {
             steps {
                 sh 'printenv'
                 sh "echo ENTROU NO BUILD"
+                echo "My branch is: ${env.GIT_BRANCH}"
             }
         }
     
@@ -54,7 +55,15 @@ pipeline {
                 branch 'homologacao'
               }
               steps {
-                echo 'ENTROU NO TESTE DE BRANCH'
+                echo 'ENTROU NO TESTE DE BRANCH HOMOLOGACAO'
+              }
+        }
+        stage('Deploy PROD'){
+            when{
+                branch 'master'
+              }
+              steps {
+                echo 'ENTROU NO TESTE DE BRANCH MASTER'
               }
         }
         
