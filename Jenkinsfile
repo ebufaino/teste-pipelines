@@ -33,7 +33,7 @@ pipeline {
         
         stage('master-branch-stuff'){
             when{
-                branch 'origin/homologacao'
+                GIT_BRANCH 'origin/master'
               }
               steps {
                 echo 'ENTROU NO TESTE DE BRANCH HOMOLOGACAO'
