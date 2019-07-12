@@ -32,9 +32,12 @@ pipeline {
         }
         
         stage('master-branch-stuff'){
-            when{
-                branch 'origin/master'
-              }
+            when {
+                expression { BRANCH_NAME ==~ /(homologacao|staging)/ }
+                anyOf {
+                    environment name: 'branch', value: 'homologacao'
+                }
+            }
               steps {
                 echo 'ENTROU NO TESTE DE BRANCH HOMOLOGACAO'
               }
