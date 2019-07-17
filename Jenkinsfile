@@ -10,7 +10,7 @@ pipeline {
       stage('CheckOut') {
         steps {
           //git branch: 'homologacao', url: 'https://github.com/prefeiturasp/SME-Pedagogico-Gestao.git'
-            //checkout scm
+            checkout scm
             sh 'ls -la'
         }
       }
