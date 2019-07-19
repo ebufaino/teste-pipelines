@@ -9,15 +9,16 @@ pipeline {
     stages {
       stage('CheckOut') {
         steps {
-          //git branch: 'homologacao', url: 'https://github.com/prefeiturasp/SME-Pedagogico-Gestao.git'
+          //git branch: '**', url: 'https://github.com/prefeiturasp/SME-Pedagogico-Gestao.git'
             checkout scm
             sh 'ls -la'
+            sh "echo MINHA BRANCH É ${GIT_BRANCH}" 
         }
       }
       
       stage('Testes Unitarios') {
         steps {
-          sh "echo executar testes"  
+            sh "echo executar testes ${GIT_BRANCH}"  
             
         }
       }
@@ -87,3 +88,4 @@ post {
         }
     }
 }
+
