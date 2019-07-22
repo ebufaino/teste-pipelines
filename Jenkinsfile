@@ -49,7 +49,7 @@ pipeline {
                 sh "echo entrou em deploy hom homologação"
                 sh "echo MINHA BRANCH É ${GIT_BRANCH}"
                 sh "echo entregar homologação"
-                input message: 'entregar homologacao??', ok: 'aprovar'
+                //input message: 'entregar homologacao??', ok: 'aprovar'
                 
             }
       }
@@ -62,7 +62,7 @@ pipeline {
                 sh "echo entrou em deploy PROD homologação"
                 sh "echo MINHA BRANCH É ${GIT_BRANCH}"
                 sh "echo entregar PRODUCAO"
-                input message: 'entregar Produção??', ok: 'aprovar'
+                //input message: 'entregar Produção??', ok: 'aprovar'
                 
             }
       } 
