@@ -40,18 +40,32 @@ pipeline {
         }
       }
       
-      //stage('Deploy para hom') {
-      //      agent any
-      //      when {
-      //          branch 'homologacao' 
-      //      }
-      //      steps {
-                //sh './jenkins/scripts/deliver-for-development.sh'
-      //          sh "echo entregar homologação"
-      //          input message: 'entregar homologacao??', ok: 'aprovar'
-                //sh './jenkins/scripts/kill.sh'
-      //      }
-      //}
+      stage('Deploy para hom') {
+            agent any
+            when {
+                branch 'dev' 
+            }
+            steps {
+                sh "echo entrou em deploy hom homologação"
+                sh "echo MINHA BRANCH É ${GIT_BRANCH}"
+                sh "echo entregar homologação"
+                input message: 'entregar homologacao??', ok: 'aprovar'
+                
+            }
+      }
+       stage('Deploy para PROD') {
+            agent any
+            when {
+                branch 'master' 
+            }
+            steps {
+                sh "echo entrou em deploy PROD homologação"
+                sh "echo MINHA BRANCH É ${GIT_BRANCH}"
+                sh "echo entregar PRODUCAO"
+                input message: 'entregar Produção??', ok: 'aprovar'
+                
+            }
+      } 
       
       
 }
