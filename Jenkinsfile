@@ -8,4 +8,13 @@ pipeline {
             }    
         }
 }
+    stages{
+        stage('teste python'){
+        agent { node { label 'dockerpython' } }
+          steps {    
+              sh 'ls -la'
+            }   
+        }
+    
+    }
 }
