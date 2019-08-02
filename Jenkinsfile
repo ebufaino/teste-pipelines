@@ -1,11 +1,8 @@
 pipeline {
-    agent {
-        node {
-          label 'master'
-        }
-    }
+    agent none
     stages {
         stage('teste postgres'){
+        agent { node { label 'master' } }    
             steps {    
               sh 'docker run --rm -p 6666:5432 -e POSTGRES_DB=XXX  -e POSTGRES_PASSWORD=adminadmin -e POSTGRES_USER=admin postgres '
             }    
@@ -14,12 +11,9 @@ pipeline {
    
     stages {
         stage('CheckOut') {
+            agent { node { label 'dorckerpython' } }
             steps {
-            agent {
-               node {
-                label 'dockerpython'
-              }
-            }    
+               
             //step([$class: 'WsCleanup'])    
             git branch: 'development', url: 'https://github.com/prefeiturasp/SME-Terceirizadas.git'
          }
