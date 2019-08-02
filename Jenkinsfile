@@ -7,13 +7,5 @@ pipeline {
               sh 'docker run --rm -p 6666:5432 -e POSTGRES_DB=XXX  -e POSTGRES_PASSWORD=adminadmin -e POSTGRES_USER=admin postgres '
             }    
         }
-        stage('teste python'){
-        
-          steps {
-              agent { node { label 'dockerpython' } }
-              sh 'ls -la'
-            }   
-        }
-}
-
+    }
 }
