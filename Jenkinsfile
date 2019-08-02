@@ -1,74 +1,50 @@
 pipeline {
-    agent {
-      node {
-        label 'dockerdotnet'
-              //customWorkspace '/some/other/path'
-      }
-    }
-          
+    agent {master}
+    
     stages {
-      stage('CheckOut') {
-        steps {
-          //git branch: '**', url: 'https://github.com/prefeiturasp/SME-Pedagogico-Gestao.git'
-            checkout scm
-            sh 'ls -la'
-            sh "echo MINHA BRANCH É ${GIT_BRANCH}" 
+        stage('teste postgres'){
+        sh 'docker run --rm -p 6666:5432 -e POSTGRES_DB=XXX  -e POSTGRES_PASSWORD=adminadmin -e POSTGRES_USER=admin postgres '     
         }
+    }    
+    stages {
+        agent {
+          node {
+            label 'dockerpython'
+          }
+        }
+          stage('CheckOut') {
+            steps {
+            //step([$class: 'WsCleanup'])    
+            git branch: 'development', url: 'https://github.com/prefeiturasp/SME-Terceirizadas.git'
+         }
       }
       
-      stage('Testes Unitarios') {
+      stage('Testes') {
         steps {
-            sh "echo executar testes ${GIT_BRANCH}"  
+          sh 'pip3 install --no-cache -r requirements/local.txt'    
+          sh "echo executar testes"
+          //sh 'pytest'
+          //sh 'make coverage'
+          //sh 'docker-compose down'
             
         }
-      }
-      
-      //stage('Analise codigo') {
-       // steps {
-       //   sh 'dotnet-sonarscanner begin /k:"SME-Pedagogico-Gestao-DEV" /d:sonar.host.url="http://automation.educacao.intranet:9000" /d:sonar.login="1310e591286e2f4a6a3836a5d9e906c0ff828f62"'
-       //   sh 'dotnet build'
-        //  sh 'dotnet-sonarscanner end /d:sonar.login="1310e591286e2f4a6a3836a5d9e906c0ff828f62"'
-        //}
+        //post {
+         //   success{
+          //  junit 'junit-test.xml'
+            //publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'htmlcov', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
+       // }
       //}
-     
+    } 
+      
+       
       
       stage('Build') {
         steps {
-          //sh 'dotnet-sonarscanner begin /k:"SME-Pedagogico-API-DEV" /d:sonar.host.url="http://automation.educacao.intranet:9000" /d:sonar.login="b5c1bda4c6e9a4cc414d37f3dd9e163cd6e54f92"'
-          sh "echo entrou no build"
-          //sh 'dotnet-sonarscanner end /d:sonar.login="d5d0485ee11059d5a9110a9dcce00cb9a098d10b"'
+          
+          sh 'ls -la'
+          
         }
       }
-      
-      stage('Deploy para hom') {
-            agent any
-            when {
-                branch 'dev' 
-            }
-            steps {
-                sh "echo entrou em deploy hom homologação"
-                sh "echo MINHA BRANCH É ${GIT_BRANCH}"
-                sh "echo entregar homologação"
-                //input message: 'entregar homologacao??', ok: 'aprovar'
-                
-            }
-      }
-       stage('Deploy para PROD') {
-            agent any
-            when {
-                branch 'master' 
-            }
-            steps {
-                sh "echo entrou em deploy PROD homologação"
-                sh "echo MINHA BRANCH É ${GIT_BRANCH}"
-                sh "echo entregar PRODUCAO"
-                //input message: 'entregar Produção??', ok: 'aprovar'
-                
-            }
-      } 
-        
-      
-      
 }
 
 
