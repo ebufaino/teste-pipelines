@@ -14,12 +14,12 @@ pipeline {
    
     stages {
         stage('CheckOut') {
-             agent {
+            steps {
+            agent {
                node {
                 label 'dockerpython'
               }
-            }
-            steps {
+            }    
             //step([$class: 'WsCleanup'])    
             git branch: 'development', url: 'https://github.com/prefeiturasp/SME-Terceirizadas.git'
          }
