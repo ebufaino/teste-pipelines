@@ -10,14 +10,14 @@ pipeline {
               sh 'docker run --rm -p 6666:5432 -e POSTGRES_DB=XXX  -e POSTGRES_PASSWORD=adminadmin -e POSTGRES_USER=admin postgres '
             }    
         }
-    }    
-    stages {
-        agent {
+    }
+    agent {
           node {
             label 'dockerpython'
           }
         }
-          stage('CheckOut') {
+    stages {
+        stage('CheckOut') {
             steps {
             //step([$class: 'WsCleanup'])    
             git branch: 'development', url: 'https://github.com/prefeiturasp/SME-Terceirizadas.git'
