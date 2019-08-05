@@ -36,11 +36,6 @@ pipeline {
           }
         }
     }
-    post {
-        always { 
-            agent { label 'master' }
-            sh 'docker container stop postgres-sme'}
-    }
-    
+     
      
 }
