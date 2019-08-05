@@ -31,6 +31,11 @@ pipeline {
           steps {
             sh 'pip3 install --no-cache -r requirements/local.txt'    
             sh "echo executar testes"
+            sh 'export POSTGRES_HOST=postgres-sme'  
+            sh 'export POSTGRES_PORT=5432'
+            sh 'export POSTGRES_DB=teste'
+            sh 'export POSTGRES_USER=admin'
+            sh 'export POSTGRES_PASSWORD=adminadmin'  
             sh 'pytest'
             sh "echo ${POSTGRES_HOST}"  
           }
