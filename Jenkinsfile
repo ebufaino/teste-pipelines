@@ -29,7 +29,7 @@ pipeline {
         stage('Preparação ambiente') {
             
           steps {
-            sh 'pip install --no-cache -r requirements/local.txt'    
+            sh 'pip3 install --no-cache -r requirements/local.txt'    
             sh "echo executar testes"
             sh 'pytest'
             sh "echo ${POSTGRES_HOST}"  
