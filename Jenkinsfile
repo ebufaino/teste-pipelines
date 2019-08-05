@@ -23,7 +23,5 @@ pipeline {
           }
         }
     }
-    post {
-        always { sh 'docker container stop postgres-sme'}
-    }    
+     
 }
