@@ -21,5 +21,8 @@ pipeline {
             sh "echo executar testes"            
           }
         }
+    }
+    post {
+        always { sh 'docker container stop postgres-sme'}
     }    
 }
