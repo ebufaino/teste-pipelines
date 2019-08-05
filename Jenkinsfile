@@ -2,10 +2,10 @@ pipeline {
     agent { node { label 'dockerpython' } }
     
     environment {
-        env.POSTGRES_HOST = 'postgres-sme'
-        env.POSTGRES_DB = 'teste'
-        env.POSTGRES_USER = 'admin'
-        env.POSTGRES_PASSWORD = 'adminadmin'
+        POSTGRES_HOST = 'postgres-sme'
+        POSTGRES_DB = 'teste'
+        POSTGRES_USER = 'admin'
+        POSTGRES_PASSWORD = 'adminadmin'
         
         
         
