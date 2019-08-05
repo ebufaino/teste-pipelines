@@ -31,6 +31,7 @@ pipeline {
         }
     }
     post {
+        agent { node { label 'master' } }
         always { sh 'docker container stop postgres-sme'}
     }
     
