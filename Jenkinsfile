@@ -35,6 +35,12 @@ pipeline {
               sh "echo ${POSTGRES_HOST}"  
           }
         }
+         stage('Limpeza'){
+        agent { node { label 'master' } }    
+            steps {    
+              sh 'docker container stop postgres-sme'
+            }    
+        }
     }
      
      
