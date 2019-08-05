@@ -11,7 +11,14 @@ pipeline {
         agent { node { label 'dockerpython' } }    
             steps {    
               git branch: 'development', url: 'https://github.com/prefeiturasp/SME-Terceirizadas.git'
+              sh 'ls -la'  
             }    
+        }
+        
+        stage('Testes') {
+        steps {
+          sh 'pip3 install --no-cache -r requirements/local.txt'    
+          sh "echo executar testes"            
         }
     }
 }
