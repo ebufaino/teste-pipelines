@@ -16,6 +16,7 @@ pipeline {
         }
         
         stage('Testes') {
+          agent { node { label 'dockerpython' } }  
           steps {
             sh 'pip3 install --no-cache -r requirements/local.txt'    
             sh "echo executar testes"            
