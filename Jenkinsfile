@@ -19,7 +19,8 @@ pipeline {
             
           steps {
             sh 'pip3 install --no-cache -r requirements/local.txt'    
-            sh "echo executar testes"            
+            sh "echo executar testes"
+            sh 'pytest'  
           }
         }
     }
