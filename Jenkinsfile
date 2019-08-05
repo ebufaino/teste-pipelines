@@ -3,6 +3,11 @@ pipeline {
     
     environment {
         POSTGRES_HOST = 'postgres-sme'
+        POSTGRES_DB = 'teste'
+        POSTGRES_USER = 'admin'
+        POSTGRES_PASSWORD = 'adminadmin'
+        
+        
         
     }
     
@@ -17,7 +22,7 @@ pipeline {
          stage('start postgres teste'){
         agent { node { label 'master' } }    
             steps {    
-              sh 'docker run -d --rm --name postgres-sme -e POSTGRES_PASSWORD=adminadmin -e POSTGRES_USER=admin postgres'
+              sh 'docker run -d --rm --name postgres-sme -e POSTGRES_DB=teste -e POSTGRES_PASSWORD=adminadmin -e POSTGRES_USER=admin postgres'
             }    
         }
         
