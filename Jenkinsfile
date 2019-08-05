@@ -1,5 +1,11 @@
 pipeline {
     agent { node { label 'dockerpython' } }
+    
+    environment {
+        POSTGRES_HOST = 'postgres-sme'
+        
+    }
+    
     stages{
        stage('CheckOut'){
             
