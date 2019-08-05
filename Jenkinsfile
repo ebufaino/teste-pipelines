@@ -7,10 +7,10 @@ pipeline {
               sh 'docker run -d --rm --name postgres-sme -p 6666:5432 -e POSTGRES_DB=XXX  -e POSTGRES_PASSWORD=adminadmin -e POSTGRES_USER=admin postgres'
             }    
         }
-        stage('teste python'){
+        stage('CheckOut'){
         agent { node { label 'dockerpython' } }    
             steps {    
-              sh 'ls -la'
+              git branch: 'development', url: 'https://github.com/prefeiturasp/SME-Terceirizadas.git'
             }    
         }
     }
