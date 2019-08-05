@@ -16,9 +16,10 @@ pipeline {
         }
         
         stage('Testes') {
-        steps {
-          sh 'pip3 install --no-cache -r requirements/local.txt'    
-          sh "echo executar testes"            
+          steps {
+            sh 'pip3 install --no-cache -r requirements/local.txt'    
+            sh "echo executar testes"            
+          }
         }
-    }
+    }    
 }
