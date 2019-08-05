@@ -4,7 +4,7 @@ pipeline {
         stage('teste postgres'){
         agent { node { label 'master' } }    
             steps {    
-              sh 'docker run -d --rm -p 6666:5432 -e POSTGRES_DB=XXX  -e POSTGRES_PASSWORD=adminadmin -e POSTGRES_USER=admin postgres'
+              sh 'docker run -d --rm --name postgres-sme -p 6666:5432 -e POSTGRES_DB=XXX  -e POSTGRES_PASSWORD=adminadmin -e POSTGRES_USER=admin postgres'
             }    
         }
         stage('teste python'){
