@@ -2,10 +2,10 @@ pipeline {
     agent { node { label 'dockerpython' } }
     
     environment {
-        POSTGRES_HOST = 'postgres-sme'
-        POSTGRES_DB = 'teste'
-        POSTGRES_USER = 'admin'
-        POSTGRES_PASSWORD = 'adminadmin'
+        env.POSTGRES_HOST = 'postgres-sme'
+        env.POSTGRES_DB = 'teste'
+        env.POSTGRES_USER = 'admin'
+        env.POSTGRES_PASSWORD = 'adminadmin'
         
         
         
@@ -16,7 +16,7 @@ pipeline {
             
             steps {    
               git branch: 'development', url: 'https://github.com/prefeiturasp/SME-Terceirizadas.git'
-              sh 'ls -la'  
+              //sh 'ls -la'  
             }    
         }
          stage('start postgres teste'){
@@ -31,10 +31,6 @@ pipeline {
           steps {
             sh 'pip3 install --no-cache -r requirements/local.txt'    
             sh "echo executar testes"
-            sh 'export POSTGRES_HOST = "postgres-sme"'
-            sh 'export POSTGRES_DB = "teste"'
-            sh 'export POSTGRES_USER = "admin"'
-            sh 'export POSTGRES_PASSWORD = "adminadmin"'  
             sh 'pytest'
             sh "echo ${POSTGRES_HOST}"  
           }
