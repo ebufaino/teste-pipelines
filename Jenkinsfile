@@ -1,5 +1,5 @@
 pipeline {
-    agent { node { label 'python-edu' } }
+    agent { node { label 'dockerpython' } }
     
     environment {
         POSTGRES_HOST = 'postgres-sme'
