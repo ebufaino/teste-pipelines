@@ -1,5 +1,5 @@
 pipeline {
-    agent { node { label 'dockerpython' } }
+    agent { node { label 'python-edu' } }
     
     environment {
         POSTGRES_HOST = 'postgres-sme'
@@ -29,7 +29,7 @@ pipeline {
         stage('Preparação ambiente') {
             
           steps {
-            sh 'pip3 install --no-cache -r requirements/local.txt'    
+            sh 'pip install --no-cache -r requirements/local.txt'    
             sh "echo executar testes"
             sh 'pytest'
             sh "echo ${POSTGRES_HOST}"  
