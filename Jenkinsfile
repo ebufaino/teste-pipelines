@@ -34,6 +34,7 @@ pipeline {
         stage('Preparação ambiente') {
             
           steps {
+            sh 'ls -la'  
             sh 'pip3 install --no-cache -r requirements/local.txt'    
             sh "echo executar testes"
             sh 'export POSTGRES_HOST=postgres-sme'  
