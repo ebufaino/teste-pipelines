@@ -19,14 +19,15 @@ pipeline {
          stage('start postgres teste'){
         agent { node { label 'master' } }    
             steps {    
-              sh 'docker run -d --rm --name postgres-sme -e POSTGRES_DB=teste -e POSTGRES_PASSWORD=adminadmin -e POSTGRES_USER=admin postgres'
+              sh 'docker run --rm --name postgres-sme --network python-net -e POSTGRES_DB=teste -e POSTGRES_PASSWORD=adminadmin -e POSTGRES_USER=admin postgres'
             }    
         }
         stage('Prep'){
           agent { node { label 'master' } }    
             steps {    
-              sh 'docker network create python-net'
-              sh 'docker network connect python-net postgres-sme'  
+              //sh 'docker network create python-net'
+              //sh 'docker network connect python-net postgres-sme'
+              // sh 'ls -la'  
             }    
         }
         
