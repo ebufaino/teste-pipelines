@@ -35,7 +35,7 @@ pipeline {
             
           steps {
             sh 'ls -la'  
-            sh 'pip3 install --no-cache -r requirements/local.txt'    
+            sh 'pip install --no-cache -r requirements/local.txt'    
             sh "echo executar testes"
             sh 'export POSTGRES_HOST=postgres-sme'  
             sh 'export POSTGRES_PORT=5432'
