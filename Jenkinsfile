@@ -27,7 +27,7 @@ pipeline {
             steps {    
               //sh 'docker network create python-net'
               //sh 'docker network connect python-net postgres-sme'
-              // sh 'ls -la'  
+               sh 'ls -la'  
             }    
         }
         
