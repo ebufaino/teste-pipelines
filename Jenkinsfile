@@ -11,7 +11,7 @@ pipeline {
           git 'https://github.com/prefeiturasp/SME-NovoSGP.git'
           //sh 'ls -la'
           sh "echo MINHA BRANCH É ${GIT_BRANCH}"
-          sh 'printenv'
+          //sh 'printenv'
             
             
         }
@@ -45,11 +45,12 @@ pipeline {
                 branch 'master'
             }
          steps {
-             sh 'echo analise sonarqube'
+             sh 'echo Analise SonarQube API'
            //sh 'dotnet-sonarscanner begin /k:"SME-NovoSGP" /d:sonar.host.url="http://automation.educacao.intranet:9000" /d:sonar.login="346fd763d9581684b9271a03d8ef5a16fe92622b"'
           // sh 'dotnet build'
            //sh 'dotnet-sonarscanner end /d:sonar.login="346fd763d9581684b9271a03d8ef5a16fe92622b"'
            // anlise de frontend
+             sh 'echo Analise SonarQube FRONTEND'
           // sh 'sonar-scanner \
           //     -Dsonar.projectKey=SME-NovoSGP-WebClient \
           //     -Dsonar.sources=src/SME.SGP.WebClient \
@@ -58,18 +59,23 @@ pipeline {
          }
        }  
       
-      stage('Example Deploy Master') {
+      stage('Deploy Homologação') {
             when {
                 branch 'master'
             }
             steps {
+               timeout(time: 24, unit: "HOURS") {
+            // withCredentials([string(credentialsId: 'webhook-backend', variable: 'WH-teams')]) {
+             //office365ConnectorSend color: '008000', message: "O Build ${BUILD_DISPLAY_NAME} - Requer uma aprovação para deploy !!!", status: 'SUCESSO', webhookUrl: '$WH-teams'
+              // }
                 input message: 'Deseja realizar o deploy?', ok: 'SIM', submitter: 'admin'
+            }
                 sh 'echo analise codico sonar aqui'
                 sh 'echo Deploying master'
             }
         }
         
-        stage('Example Deploy DEV') {
+        stage('Deploy Desenvolvimento') {
             when {
                 branch 'dev'
             }
@@ -80,10 +86,7 @@ pipeline {
             }
         }
         
-       
-     
-     
-     
+ 
      
     // stage('Aprovação') {
       //    steps {
