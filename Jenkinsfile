@@ -142,7 +142,7 @@ post {
             
         }
         success {
-            withCredentials(bindings: [string(credentialsId: 'webhook-backend', variable: 'whbackend')]) {
+            withCredentials([string(credentialsId: 'webhook-backend', variable: 'whbackend')]) {
               office365ConnectorSend color: '008000', message: "O Build ${BUILD_DISPLAY_NAME} - Esta ok !!!  <${env.BUILD_URL}> ", status: 'SUCESSO', webhookUrl: '$whbackend'
             }
             telegramSend("${JOB_NAME}...O Build ${BUILD_DISPLAY_NAME} - Esta ok !!!\nBranch name: ${GIT_BRANCH}\n Consulte o log para detalhes -> [Job logs](${env.BUILD_URL}console)\n\n Uma nova versão da aplicação esta disponivel!!!")
