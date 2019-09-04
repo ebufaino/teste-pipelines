@@ -12,7 +12,7 @@ pipeline {
           sh 'ls -la'
           sh "echo MINHA BRANCH É ${GIT_BRANCH}"
             sh "echo MEU COMMIT É ${GIT_COMMIT}"
-            sh "echo AUTHOR É ${GIT_AUTHOR_NAME}"
+            sh "echo AUTHOR É ${GIT_COMMITTER_NAME}"
             
             
         }
