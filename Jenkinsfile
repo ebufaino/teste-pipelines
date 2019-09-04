@@ -12,7 +12,7 @@ pipeline {
           //checkout scm  
           //sh 'ls -la'
           sh "echo MINHA BRANCH É ${GIT_BRANCH}"
-          sh 'printenv'
+          //sh 'printenv'
             
             
         }
@@ -38,7 +38,7 @@ pipeline {
        }
      }  
         
-      stage('Analise codigo') {
+      stage('Analise Codigo') {
           when {
                 branch 'master'
             }
@@ -62,7 +62,6 @@ pipeline {
                 branch 'dev'
             }
             steps {
-                //input message: 'Deseja realizar o deploy ?', ok: 'SIM', submitter: 'admin'
                 sh 'echo analise codico sonar aqui'
                 sh 'echo Deploying DEV'
             }
@@ -73,14 +72,14 @@ pipeline {
                 branch 'master'
             }
             steps {
-               timeout(time: 24, unit: "HOURS") {
-            // withCredentials([string(credentialsId: 'webhook-backend', variable: 'WH-teams')]) {
-             //office365ConnectorSend color: '008000', message: "O Build ${BUILD_DISPLAY_NAME} - Requer uma aprovação para deploy !!!", status: 'SUCESSO', webhookUrl: '$WH-teams'
+                 timeout(time: 24, unit: "HOURS") {
+                // withCredentials([string(credentialsId: 'webhook-backend', variable: 'WH-teams')]) {
+                 //office365ConnectorSend color: '008000', message: "O Build ${BUILD_DISPLAY_NAME} - Requer uma aprovação para deploy !!!", status: 'SUCESSO', webhookUrl: '$WH-teams'
               // }
-                input message: 'Deseja realizar o deploy?', ok: 'SIM', submitter: 'admin'
+                 input message: 'Deseja realizar o deploy?', ok: 'SIM', submitter: 'admin'
             }
-                sh 'echo analise codico sonar aqui'
-                sh 'echo Deploying master'
+                 sh 'echo Deploying homologacao'
+                
                 // Start JOB Rundeck para build das imagens Docker e push Azure repo
       
           script {
@@ -122,8 +121,7 @@ pipeline {
      //         tags: "",
       //        tailLog: true])
       //     }
-      //  }
-      //}
+      
        
             }
         }
