@@ -42,7 +42,7 @@ pipeline {
                 branch 'master'
             }
          steps {
-             sh 'analise sonarqube'
+             sh 'echo analise sonarqube'
            //sh 'dotnet-sonarscanner begin /k:"SME-NovoSGP" /d:sonar.host.url="http://automation.educacao.intranet:9000" /d:sonar.login="346fd763d9581684b9271a03d8ef5a16fe92622b"'
           // sh 'dotnet build'
            //sh 'dotnet-sonarscanner end /d:sonar.login="346fd763d9581684b9271a03d8ef5a16fe92622b"'
@@ -61,8 +61,8 @@ pipeline {
             }
             steps {
                 input message: 'Deseja realizar o deploy?', ok: 'SIM', submitter: 'admin'
-                echo 'analise codico sonar aqui'
-                echo 'Deploying master'
+                sh 'echo analise codico sonar aqui'
+                sh 'echo Deploying master'
             }
         }
         
@@ -72,8 +72,8 @@ pipeline {
             }
             steps {
                 //input message: 'Deseja realizar o deploy ?', ok: 'SIM', submitter: 'admin'
-                echo 'analise codico sonar aqui'
-                echo 'Deploying DEV'
+                sh 'echo analise codico sonar aqui'
+                sh 'echo Deploying DEV'
             }
         }
         
