@@ -9,22 +9,16 @@ pipeline {
       stage('CheckOut') {
         steps {
           git 'https://github.com/prefeiturasp/SME-NovoSGP.git'
-          sh 'ls -la'
-          sh "echo MINHA BRANCH É ${GIT_BRANCH}"  
+          //checkout scm  
+          //sh 'ls -la'
+          sh "echo MINHA BRANCH É ${GIT_BRANCH}"
+          //sh 'printenv'
+            
+            
         }
       }
       
-        
-       
-     stage('Build projeto') {
-       steps {
-         sh "echo executando build de projeto"
-         sh 'dotnet restore'
-       }
-     } 
-     
-     
-      
+ 
      stage('Testes de integração') {
         steps {
           
@@ -37,91 +31,80 @@ pipeline {
         }
      }
         
-      stage('Analise codigo') {
+      stage('Build projeto') {
+       steps {
+         sh "echo executando build de projeto"
+         sh 'dotnet restore'
+       }
+     }  
+        
+      stage('Analise Codigo') {
           when {
                 branch 'master'
             }
          steps {
-             sh 'echo analise sonarqube'
+             sh 'echo Analise SonarQube API'
            //sh 'dotnet-sonarscanner begin /k:"SME-NovoSGP" /d:sonar.host.url="http://automation.educacao.intranet:9000" /d:sonar.login="346fd763d9581684b9271a03d8ef5a16fe92622b"'
           // sh 'dotnet build'
            //sh 'dotnet-sonarscanner end /d:sonar.login="346fd763d9581684b9271a03d8ef5a16fe92622b"'
            // anlise de frontend
+             sh 'echo Analise SonarQube FRONTEND'
           // sh 'sonar-scanner \
           //     -Dsonar.projectKey=SME-NovoSGP-WebClient \
           //     -Dsonar.sources=src/SME.SGP.WebClient \
           //     -Dsonar.host.url=http://sonar.sme.prefeitura.sp.gov.br \
           //      -Dsonar.login=1ab3b0eb51a0f51c846c13f2f5a0255fd5d7583e'
          }
-       }  
-      
-      stage('Example Deploy Master') {
-            when {
-                branch 'master'
-            }
-            steps {
-                input message: 'Deseja realizar o deploy?', ok: 'SIM', submitter: 'admin'
-                sh 'echo analise codico sonar aqui'
-                sh 'echo Deploying master'
-            }
-        }
+       }
         
-        stage('Example Deploy DEV') {
+      stage('Deploy Desenvolvimento') {
             when {
                 branch 'dev'
             }
             steps {
-                //input message: 'Deseja realizar o deploy ?', ok: 'SIM', submitter: 'admin'
                 sh 'echo analise codico sonar aqui'
                 sh 'echo Deploying DEV'
             }
-        }
-        
-       
-     
-     
-     
-     
-    // stage('Aprovação') {
-      //    steps {
-      //        timeout(time: 24, unit: "HOURS") {
-              
-             // withCredentials([string(credentialsId: 'webhook-backend', variable: 'WH-teams')]) {
-             // office365ConnectorSend color: '008000', message: "O Build ${BUILD_DISPLAY_NAME} - Requer uma aprovação para deploy !!!", status: 'SUCESSO', webhookUrl: '$WH-teams'
-           // }
-      //      input message: 'Deseja realizar o deploy?', ok: 'SIM', submitter: 'admin'
-     //}
-     // }
-     // }
+        }  
       
-      // Start JOB Rundeck para build das imagens Docker e push Azure repo
-      //stage('Build Images') {
-      //  steps {
-      //    script {
-      //      step([$class: "RundeckNotifier",
-      //        includeRundeckLogs: true,
+      stage('Deploy Homologação') {
+            when {
+                branch 'master'
+            }
+            steps {
+                 timeout(time: 24, unit: "HOURS") {
+                // withCredentials([string(credentialsId: 'webhook-backend', variable: 'WH-teams')]) {
+                 //office365ConnectorSend color: '008000', message: "O Build ${BUILD_DISPLAY_NAME} - Requer uma aprovação para deploy !!!", status: 'SUCESSO', webhookUrl: '$WH-teams'
+              // }
+                 input message: 'Deseja realizar o deploy?', ok: 'SIM', submitter: 'admin'
+            }
+                 sh 'echo Deploying homologacao'
+                
+                // Start JOB Rundeck para build das imagens Docker e push Azure repo
+      
+          script {
+           step([$class: "RundeckNotifier",
+              includeRundeckLogs: true,
+                // JOB USADO PARA TESTE RUNDECK
+                jobId: "07abb9c0-c66f-4119-8a86-bf7f0cb98199",
+               
+                //JOB PRODUCAO DE BUILD
       //        jobId: "397ce3f8-0af7-4d26-b65b-19f09ccf6c82",
-      //        nodeFilters: "",
+              nodeFilters: "",
               //options: """
               //     PARAM_1=value1
                //    PARAM_2=value2
               //     PARAM_3=
               //     """,
-       //       rundeckInstance: "Rundeck-SME",
-       //       shouldFailTheBuild: true,
-       //       shouldWaitForRundeckJob: true,
-       //       tags: "",
-       //       tailLog: true])
-        //   }
-       // }
-     // }
-      
-      
-      //Start JOB Rundeck para update de imagens no host homologação 
-     // stage('Deploy homologaçao') {
-        
-     //   steps {
-     //      sh 'echo DEPLOY HOMOLOG'    
+              rundeckInstance: "Rundeck-SME",
+              shouldFailTheBuild: true,
+              shouldWaitForRundeckJob: true,
+              tags: "",
+              tailLog: true])
+           }
+                
+       //Start JOB Rundeck para update de imagens no host homologação 
+         
       //   script {
       //      step([$class: "RundeckNotifier",
      //         includeRundeckLogs: true,
@@ -138,8 +121,11 @@ pipeline {
      //         tags: "",
       //        tailLog: true])
       //     }
-      //  }
-      //}
+      
+       
+            }
+        }
+     
 }
 
     
@@ -154,7 +140,7 @@ post {
            // withCredentials([string(credentialsId: 'webhook-backend', variable: 'WH-teams')]) {
            //   office365ConnectorSend color: '008000', message: "O Build ${BUILD_DISPLAY_NAME} - Esta ok !!!  <${env.BUILD_URL}> ", status: 'SUCESSO', webhookUrl: '$WH-teams'
            // }
-            telegramSend("${JOB_NAME}...O Build ${BUILD_DISPLAY_NAME} - Esta ok !!!\n Consulte o log para detalhes -> [Job logs](${env.BUILD_URL}console)\n\n Uma nova versão da aplicação esta disponivel!!!")
+            telegramSend("${JOB_NAME}...O Build ${BUILD_DISPLAY_NAME} - Esta ok !!!\nBranch name: ${GIT_BRANCH}\n Consulte o log para detalhes -> [Job logs](${env.BUILD_URL}console)\n\n Uma nova versão da aplicação esta disponivel!!!")
         }
         unstable {
            // withCredentials([string(credentialsId: 'webhook-backend', variable: 'WH-teams')]) {
