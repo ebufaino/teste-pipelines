@@ -81,28 +81,8 @@ pipeline {
             }
                 sh 'echo analise codico sonar aqui'
                 sh 'echo Deploying master'
-            }
-        }
-        
-        
-        
- 
-     
-    // stage('Aprovação') {
-      //    steps {
-      //        timeout(time: 24, unit: "HOURS") {
-              
-             // withCredentials([string(credentialsId: 'webhook-backend', variable: 'WH-teams')]) {
-             // office365ConnectorSend color: '008000', message: "O Build ${BUILD_DISPLAY_NAME} - Requer uma aprovação para deploy !!!", status: 'SUCESSO', webhookUrl: '$WH-teams'
-           // }
-      //      input message: 'Deseja realizar o deploy?', ok: 'SIM', submitter: 'admin'
-     //}
-     // }
-     // }
+                // Start JOB Rundeck para build das imagens Docker e push Azure repo
       
-      // Start JOB Rundeck para build das imagens Docker e push Azure repo
-      //stage('Build Images') {
-      //  steps {
       //    script {
       //      step([$class: "RundeckNotifier",
       //        includeRundeckLogs: true,
@@ -119,15 +99,9 @@ pipeline {
        //       tags: "",
        //       tailLog: true])
         //   }
-       // }
-     // }
-      
-      
-      //Start JOB Rundeck para update de imagens no host homologação 
-     // stage('Deploy homologaçao') {
-        
-     //   steps {
-     //      sh 'echo DEPLOY HOMOLOG'    
+                
+                //Start JOB Rundeck para update de imagens no host homologação 
+         
       //   script {
       //      step([$class: "RundeckNotifier",
      //         includeRundeckLogs: true,
@@ -146,6 +120,10 @@ pipeline {
       //     }
       //  }
       //}
+       
+            }
+        }
+     
 }
 
     
