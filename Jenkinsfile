@@ -1,4 +1,7 @@
 pipeline {
+    options {
+    buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
+  }
     agent {
       node { 
         label 'dockerdotnet'
