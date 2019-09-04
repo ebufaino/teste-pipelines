@@ -8,7 +8,8 @@ pipeline {
     stages {
       stage('CheckOut') {
         steps {
-          git 'https://github.com/prefeiturasp/SME-NovoSGP.git'
+          //git 'https://github.com/prefeiturasp/SME-NovoSGP.git'
+          checkout scm  
           //sh 'ls -la'
           sh "echo MINHA BRANCH É ${GIT_BRANCH}"
           sh 'printenv'
