@@ -23,7 +23,15 @@ pipeline {
       }
       
  
-     stage('Testes de integração') {
+         
+      stage('Build') {
+       steps {
+         sh "echo executando build de projeto"
+         sh 'dotnet build'
+       }
+     }
+        
+       stage('Testes de integração') {
         steps {
           
           //Execuita os testes gerando um relatorio formato trx
@@ -33,13 +41,6 @@ pipeline {
           mstest()
           
         }
-     }
-        
-      stage('Build projeto') {
-       steps {
-         sh "echo executando build de projeto"
-         sh 'dotnet restore'
-       }
      }  
         
       stage('Analise Codigo') {
