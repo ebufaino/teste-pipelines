@@ -9,10 +9,9 @@ pipeline {
       stage('CheckOut') {
         steps {
           git 'https://github.com/prefeiturasp/SME-NovoSGP.git'
-          sh 'ls -la'
+          //sh 'ls -la'
           sh "echo MINHA BRANCH É ${GIT_BRANCH}"
-            sh "echo MEU COMMIT É ${GIT_COMMIT}"
-            sh "echo AUTHOR É ${GIT_COMMITTER_NAME}"
+          sh 'printenv'
             
             
         }
