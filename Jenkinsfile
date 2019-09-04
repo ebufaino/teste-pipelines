@@ -83,24 +83,28 @@ pipeline {
                 sh 'echo Deploying master'
                 // Start JOB Rundeck para build das imagens Docker e push Azure repo
       
-      //    script {
-      //      step([$class: "RundeckNotifier",
-      //        includeRundeckLogs: true,
+          script {
+           step([$class: "RundeckNotifier",
+              includeRundeckLogs: true,
+                // JOB USADO PARA TESTE RUNDECK
+                jobId: "07abb9c0-c66f-4119-8a86-bf7f0cb98199",
+               
+                //JOB PRODUCAO DE BUILD
       //        jobId: "397ce3f8-0af7-4d26-b65b-19f09ccf6c82",
-      //        nodeFilters: "",
+              nodeFilters: "",
               //options: """
               //     PARAM_1=value1
                //    PARAM_2=value2
               //     PARAM_3=
               //     """,
-       //       rundeckInstance: "Rundeck-SME",
-       //       shouldFailTheBuild: true,
-       //       shouldWaitForRundeckJob: true,
-       //       tags: "",
-       //       tailLog: true])
-        //   }
+              rundeckInstance: "Rundeck-SME",
+              shouldFailTheBuild: true,
+              shouldWaitForRundeckJob: true,
+              tags: "",
+              tailLog: true])
+           }
                 
-                //Start JOB Rundeck para update de imagens no host homologação 
+       //Start JOB Rundeck para update de imagens no host homologação 
          
       //   script {
       //      step([$class: "RundeckNotifier",
