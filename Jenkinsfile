@@ -105,10 +105,10 @@ pipeline {
            step([$class: "RundeckNotifier",
               includeRundeckLogs: true,
                 // JOB USADO PARA TESTE RUNDECK
-                //jobId: "07abb9c0-c66f-4119-8a86-bf7f0cb98199",
+                jobId: "07abb9c0-c66f-4119-8a86-bf7f0cb98199",
                
               //JOB DE BUILD
-              jobId: "397ce3f8-0af7-4d26-b65b-19f09ccf6c82",
+              //jobId: "397ce3f8-0af7-4d26-b65b-19f09ccf6c82",
               nodeFilters: "",
               //options: """
               //     PARAM_1=value1
@@ -127,7 +127,12 @@ pipeline {
          script {
             step([$class: "RundeckNotifier",
               includeRundeckLogs: true,
-              jobId: "ec4238e5-4aab-4b5d-b949-aa46d6b2b09d",
+ //>>>>>>>>   // JOB USADO PARA TESTE RUNDECK
+                jobId: "07abb9c0-c66f-4119-8a86-bf7f0cb98199",
+               
+ //>>>>>>>>   //JOB DE BUILD
+              //jobId: "397ce3f8-0af7-4d26-b65b-19f09ccf6c82",
+              
               nodeFilters: "",
               //options: """
               //     PARAM_1=value1
