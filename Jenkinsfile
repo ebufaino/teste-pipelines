@@ -9,12 +9,7 @@ pipeline {
     
     options {
       buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
-      office365ConnectorWebhooks([[
-                    startNotification: true,
-                        url: 'https://outlook.office.com/webhook/d7aeebc4-8a95-47a7-96fb-cc3c6a647cf2@62803d52-0a04-4755-8c88-6e5fcb82b92f/JenkinsCI/a0efadbd084541439abb055ec7ab7f5c/6bb33070-f7c7-4086-afc7-9d38d4659fc9'
-            ]]
-        )  
-              
+                    
     }
     
           
@@ -58,26 +53,26 @@ pipeline {
             }
          steps {
              sh 'echo Analise SonarQube API'
-           //sh 'dotnet-sonarscanner begin /k:"SME-NovoSGP" /d:sonar.host.url="http://automation.educacao.intranet:9000" /d:sonar.login="346fd763d9581684b9271a03d8ef5a16fe92622b"'
-          // sh 'dotnet build'
-           //sh 'dotnet-sonarscanner end /d:sonar.login="346fd763d9581684b9271a03d8ef5a16fe92622b"'
+             sh 'dotnet-sonarscanner begin /k:"SME-NovoSGP" /d:sonar.host.url="http://automation.educacao.intranet:9000" /d:sonar.login="346fd763d9581684b9271a03d8ef5a16fe92622b"'
+             sh 'dotnet build'
+             sh 'dotnet-sonarscanner end /d:sonar.login="346fd763d9581684b9271a03d8ef5a16fe92622b"'
            // anlise de frontend
              sh 'echo Analise SonarQube FRONTEND'
-          // sh 'sonar-scanner \
-          //     -Dsonar.projectKey=SME-NovoSGP-WebClient \
-          //     -Dsonar.sources=src/SME.SGP.WebClient \
-          //     -Dsonar.host.url=http://sonar.sme.prefeitura.sp.gov.br \
-          //      -Dsonar.login=1ab3b0eb51a0f51c846c13f2f5a0255fd5d7583e'
+             sh 'sonar-scanner \
+               -Dsonar.projectKey=SME-NovoSGP-WebClient \
+               -Dsonar.sources=src/SME.SGP.WebClient \
+               -Dsonar.host.url=http://sonar.sme.prefeitura.sp.gov.br \
+               -Dsonar.login=1ab3b0eb51a0f51c846c13f2f5a0255fd5d7583e'
          }
        }
         
-      stage('Deploy Desenvolvimento') {
+      stage('Deploy DEV') {
             when {
                 branch 'dev'
             }
             steps {
                 sh 'echo analise codigo sonar aqui'
-                sh 'echo Deploying DEV'
+                sh 'echo Deploy DEV'
             }
         }
         
@@ -86,20 +81,20 @@ pipeline {
                 branch 'qa'
             }
             steps {
-                sh 'echo analise codigo sonar aqui'
                 sh 'echo Deploying QA'
             }
         }
       
-      stage('Deploy Homologação') {
+      stage('Deploy HOM') {
             when {
                 branch 'master'
             }
             steps {
                  timeout(time: 24, unit: "HOURS") {
-                // withCredentials([string(credentialsId: 'webhook-backend', variable: 'WH-teams')]) {
-                 //office365ConnectorSend color: '008000', message: "O Build ${BUILD_DISPLAY_NAME} - Requer uma aprovação para deploy !!!", status: 'SUCESSO', webhookUrl: '$WH-teams'
-              // }
+                 withCredentials([string(credentialsId: 'webhook-backend', variable: 'WH-teams')]) {
+                 office365ConnectorSend color: '008000', message: "O Build ${BUILD_DISPLAY_NAME} - Requer uma aprovação para deploy !!!", status: 'SUCESSO', webhookUrl: '$WH-teams'
+               }
+                 telegramSend("${JOB_NAME}...O Build ${BUILD_DISPLAY_NAME} - Requer uma aprovação para deploy !!!\nBranch name: ${GIT_BRANCH}\n Consulte o log para detalhes -> [Job logs](${env.BUILD_URL}console)\n")
                  input message: 'Deseja realizar o deploy?', ok: 'SIM', submitter: 'admin'
             }
                  sh 'echo Deploying homologacao'
@@ -110,10 +105,10 @@ pipeline {
            step([$class: "RundeckNotifier",
               includeRundeckLogs: true,
                 // JOB USADO PARA TESTE RUNDECK
-                jobId: "07abb9c0-c66f-4119-8a86-bf7f0cb98199",
+                //jobId: "07abb9c0-c66f-4119-8a86-bf7f0cb98199",
                
-                //JOB PRODUCAO DE BUILD
-      //        jobId: "397ce3f8-0af7-4d26-b65b-19f09ccf6c82",
+              //JOB DE BUILD
+              jobId: "397ce3f8-0af7-4d26-b65b-19f09ccf6c82",
               nodeFilters: "",
               //options: """
               //     PARAM_1=value1
@@ -129,22 +124,22 @@ pipeline {
                 
        //Start JOB Rundeck para update de imagens no host homologação 
          
-      //   script {
-      //      step([$class: "RundeckNotifier",
-     //         includeRundeckLogs: true,
-     //         jobId: "ec4238e5-4aab-4b5d-b949-aa46d6b2b09d",
-     //        nodeFilters: "",
+         script {
+            step([$class: "RundeckNotifier",
+              includeRundeckLogs: true,
+              jobId: "ec4238e5-4aab-4b5d-b949-aa46d6b2b09d",
+              nodeFilters: "",
               //options: """
               //     PARAM_1=value1
                //    PARAM_2=value2
               //     PARAM_3=
               //     """,
-     //         rundeckInstance: "Rundeck-SME",
-     //         shouldFailTheBuild: true,
-     //         shouldWaitForRundeckJob: true,
-     //         tags: "",
-      //        tailLog: true])
-      //     }
+              rundeckInstance: "Rundeck-SME",
+              shouldFailTheBuild: true,
+              shouldWaitForRundeckJob: true,
+              tags: "",
+              tailLog: true])
+           }
       
        
             }
@@ -163,20 +158,20 @@ post {
         success {
             withCredentials([string(credentialsId: 'webhook-backend', variable: 'whbackend')]) {
                
-              office365ConnectorSend color: '008000', message: "O Build ${BUILD_DISPLAY_NAME} - Esta ok !!!  <${env.BUILD_URL}> ", status: 'SUCESSO', webhookUrl: "$whbackend"
+              office365ConnectorSend color: '008000', message: "O Build ${BUILD_DISPLAY_NAME} - Esta ok !!!  <${env.BUILD_URL}> ", status: 'SUCESSO', webhookUrl: '$whbackend'
             }
             telegramSend("${JOB_NAME}...O Build ${BUILD_DISPLAY_NAME} - Esta ok !!!\nBranch name: ${GIT_BRANCH}\n Consulte o log para detalhes -> [Job logs](${env.BUILD_URL}console)\n\n Uma nova versão da aplicação esta disponivel!!!")
         }
         unstable {
-           // withCredentials([string(credentialsId: 'webhook-backend', variable: 'WH-teams')]) {
-           //  office365ConnectorSend color: 'ffa500', message: "O Build ${BUILD_DISPLAY_NAME} <${env.BUILD_URL}> - Esta instavel ...Verifique os logs para corrigir o problema'", status: 'INSTAVEL', webhookUrl: '$WH-teams'
-           //}
+            withCredentials([string(credentialsId: 'webhook-backend', variable: 'WH-teams')]) {
+             office365ConnectorSend color: 'ffa500', message: "O Build ${BUILD_DISPLAY_NAME} <${env.BUILD_URL}> - Esta instavel ...Verifique os logs para corrigir o problema'", status: 'INSTAVEL', webhookUrl: '$WH-teams'
+           }
             telegramSend("O Build ${BUILD_DISPLAY_NAME} <${env.BUILD_URL}> - Esta instavel ...\nConsulte o log para detalhes -> [Job logs](${env.BUILD_URL}console)")
         }
         failure {
-            // withCredentials([string(credentialsId: 'webhook-backend', variable: 'WH-teams')]) {
-            //   office365ConnectorSend color: 'd00000', message: "O Build ${BUILD_DISPLAY_NAME} <${env.BUILD_URL}> - Quebrou. Verifique os logs para corrigir o problema'", status: 'FALHOU', webhookUrl: '$WH-teams'
-            // }
+             withCredentials([string(credentialsId: 'webhook-backend', variable: 'WH-teams')]) {
+               office365ConnectorSend color: 'd00000', message: "O Build ${BUILD_DISPLAY_NAME} <${env.BUILD_URL}> - Quebrou. Verifique os logs para corrigir o problema'", status: 'FALHOU', webhookUrl: '$WH-teams'
+             }
              telegramSend("O Build ${BUILD_DISPLAY_NAME} <${env.BUILD_URL}> - Quebrou. \nConsulte o log para detalhes -> [Job logs](${env.BUILD_URL}console)")
         }
         changed {
@@ -185,9 +180,9 @@ post {
             // }
         }
        aborted {
-             //withCredentials([string(credentialsId: 'webhook-API', variable: 'WHapi-teams')]) {
-             //  office365ConnectorSend color: 'd00000', message: "O Build ${BUILD_DISPLAY_NAME} <${env.BUILD_URL}> - Quebrou. Verifique os logs para corrigir o problema'", status: 'FALHOU', webhookUrl: '$WHapi-teams'
-             //}
+             withCredentials([string(credentialsId: 'webhook-API', variable: 'WHapi-teams')]) {
+               office365ConnectorSend color: 'd00000', message: "O Build ${BUILD_DISPLAY_NAME} <${env.BUILD_URL}> - Quebrou. Verifique os logs para corrigir o problema'", status: 'FALHOU', webhookUrl: '$WHapi-teams'
+             }
              telegramSend("O Build ${BUILD_DISPLAY_NAME} - Foi abortado.\nConsulte o log para detalhes -> [Job logs](${env.BUILD_URL}console)")
         }
     }
