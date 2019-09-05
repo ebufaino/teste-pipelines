@@ -67,10 +67,20 @@ pipeline {
                 branch 'dev'
             }
             steps {
-                sh 'echo analise codico sonar aqui'
+                sh 'echo analise codigo sonar aqui'
                 sh 'echo Deploying DEV'
             }
-        }  
+        }
+        
+        stage('Deploy QA') {
+            when {
+                branch 'qa'
+            }
+            steps {
+                sh 'echo analise codigo sonar aqui'
+                sh 'echo Deploying QA'
+            }
+        }
       
       stage('Deploy Homologação') {
             when {
