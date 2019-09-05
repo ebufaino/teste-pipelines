@@ -9,6 +9,11 @@ pipeline {
     
     options {
       buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
+        office365ConnectorWebhooks([[
+                    startNotification: true,
+                        url: 'https://outlook.office.com/webhook/d7aeebc4-8a95-47a7-96fb-cc3c6a647cf2@62803d52-0a04-4755-8c88-6e5fcb82b92f/JenkinsCI/a0efadbd084541439abb055ec7ab7f5c/6bb33070-f7c7-4086-afc7-9d38d4659fc9'
+            ]]
+        )
                     
     }
     
@@ -159,11 +164,11 @@ post {
             
         }
         success {
-            withCredentials([string(credentialsId: 'webhook-backend', variable: 'whbackend')]) {
-              office365ConnectorSend color: '008000', message: "O Build ${BUILD_DISPLAY_NAME} - Esta ok !!!  <${env.BUILD_URL}> ", status: 'SUCESSO', webhookUrl: '$whbackend' 
+            //withCredentials([string(credentialsId: 'webhook-backend', variable: 'whbackend')]) {
+             // office365ConnectorSend color: '008000', message: "O Build ${BUILD_DISPLAY_NAME} - Esta ok !!!  <${env.BUILD_URL}> ", status: 'SUCESSO', webhookUrl: 'https://outlook.office.com/webhook/d7aeebc4-8a95-47a7-96fb-cc3c6a647cf2@62803d52-0a04-4755-8c88-6e5fcb82b92f/JenkinsCI/a0efadbd084541439abb055ec7ab7f5c/6bb33070-f7c7-4086-afc7-9d38d4659fc9' 
               
-            }
-            
+            //}
+            office365ConnectorSend color: '008000', message: "O Build ${BUILD_DISPLAY_NAME} - Esta ok !!!  <${env.BUILD_URL}> ", status: 'SUCESSO', webhookUrl: 'https://outlook.office.com/webhook/d7aeebc4-8a95-47a7-96fb-cc3c6a647cf2@62803d52-0a04-4755-8c88-6e5fcb82b92f/JenkinsCI/a0efadbd084541439abb055ec7ab7f5c/6bb33070-f7c7-4086-afc7-9d38d4659fc9' 
             telegramSend("${JOB_NAME}...O Build ${BUILD_DISPLAY_NAME} - Esta ok !!!\nBranch name: ${GIT_BRANCH}\n Consulte o log para detalhes -> [Job logs](${env.BUILD_URL}console)\n\n Uma nova versão da aplicação esta disponivel!!!")
         }
         unstable {
