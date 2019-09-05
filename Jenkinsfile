@@ -11,7 +11,7 @@ pipeline {
       buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
       office365ConnectorWebhooks([[
                     startNotification: true,
-                        url: '$whbackend'
+                        url: 'https://outlook.office.com/webhook/d7aeebc4-8a95-47a7-96fb-cc3c6a647cf2@62803d52-0a04-4755-8c88-6e5fcb82b92f/JenkinsCI/a0efadbd084541439abb055ec7ab7f5c/6bb33070-f7c7-4086-afc7-9d38d4659fc9'
             ]]
         )  
               
