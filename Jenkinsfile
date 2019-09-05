@@ -4,16 +4,18 @@ pipeline {
         label 'dockerdotnet'
       }
     }
-    withCredentials([string(credentialsId: 'webhook-backend', variable: 'whbackend')]){
     
-    }
+    
+    
     options {
       buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
+        withCredentials([string(credentialsId: 'webhook-backend', variable: 'whbackend')]){
       office365ConnectorWebhooks([[
                     startNotification: true,
                         url: '$whbackend'
             ]]
-        )  
+        ) 
+        }      
     }
     
           
