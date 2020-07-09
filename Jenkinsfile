@@ -10,7 +10,7 @@ pipeline {
       disableConcurrentBuilds()
       skipDefaultCheckout()  
     }
-    githubPRComment comment: githubPRMessage('Build ${BUILD_NUMBER} ${BUILD_STATUS}'), statusVerifier: allowRunOnStatus('SUCCESS')       
+        
     stages {
        stage('CheckOut') {
         steps {
@@ -34,6 +34,7 @@ pipeline {
     }
     success {
       sh 'echo sucesso'
+      githubPRComment comment: githubPRMessage('Build ${BUILD_NUMBER} ${BUILD_STATUS}'), statusVerifier: allowRunOnStatus('SUCCESS')
     }
     
   }
