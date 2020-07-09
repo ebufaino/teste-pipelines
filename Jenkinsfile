@@ -34,7 +34,7 @@ pipeline {
     }
     success {
       sh 'echo sucesso'
-      setGitHubPullRequestStatus context: '', message: '', state: 'PENDING'
+      
       
     }
     
