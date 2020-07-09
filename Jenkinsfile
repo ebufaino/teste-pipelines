@@ -32,10 +32,10 @@ pipeline {
   post {
     always {
       echo 'One way or another, I have finished'
-      step([$class: 'GitHubCommitStatusSetter'])	    
+      	    
     }
     success {
-      step([$class: 'GitHubCommitStatusSetter'])
+      step([$class: 'GitHubCommitStatusSetter', errorHandlers: [[$class: 'ChangingBuildStatusErrorHandler', result: '']], reposSource: [$class: 'ManuallyEnteredRepositorySource', url: 'https://github.com/ebufaino/teste-pipelines.git']])
     }
     unstable {
       step([$class: 'GitHubCommitStatusSetter'])
