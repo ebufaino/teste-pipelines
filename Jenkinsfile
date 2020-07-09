@@ -42,6 +42,7 @@ pipeline {
     }
     failure {
       step([$class: 'GitHubCommitStatusSetter'])
+      step([$class: 'GitHubIssueNotifier', issueAppend: true, issueBody: '', issueLabel: '', issueReopen: true, issueRepo: '', issueTitle: ''])	    
     }
     changed {
       echo 'Things were different before...'
