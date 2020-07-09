@@ -22,7 +22,7 @@ pipeline {
        stage('Analise codigo') {
 	     
             steps {
-                sh 'echo teste homolog'
+                step([$class: 'GitHubCommitStatusSetter'])
             }
        }  
       
