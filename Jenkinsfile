@@ -32,13 +32,24 @@ pipeline {
   post {
     always {
       echo 'One way or another, I have finished'
+      	    
     }
     success {
-      sh 'echo sucesso'
       step([$class: 'GitHubCommitStatusSetter'])
-      
-      
     }
-    
+    unstable {
+      step([$class: 'GitHubCommitStatusSetter'])
+    }
+    failure {
+      step([$class: 'GitHubCommitStatusSetter'])
+      step([$class: 'GitHubIssueNotifier', issueAppend: true, issueBody: '', issueLabel: '', issueReopen: true, issueRepo: '', issueTitle: ''])	    
+    }
+    changed {
+      echo 'Things were different before...'
+    }
+    aborted {
+      step([$class: 'GitHubCommitStatusSetter'])
+    }
   }
+  
 }
