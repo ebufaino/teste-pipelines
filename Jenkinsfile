@@ -35,7 +35,7 @@ pipeline {
       	    
     }
     success {
-      step([$class: 'GitHubCommitStatusSetter', errorHandlers: [[$class: 'ChangingBuildStatusErrorHandler', result: '']], reposSource: [$class: 'ManuallyEnteredRepositorySource', url: 'https://github.com/ebufaino/teste-pipelines.git']])
+      step([$class: 'GhprbPullRequestMerge', allowMergeWithoutTriggerPhrase: false, deleteOnMerge: false, disallowOwnCode: false, failOnNonMerge: false, mergeComment: '', onlyAdminsMerge: false])
     }
     unstable {
       step([$class: 'GitHubCommitStatusSetter'])
