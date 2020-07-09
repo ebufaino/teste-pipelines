@@ -29,11 +29,11 @@ pipeline {
        
  } 
   	   
-  publishers {
+  
     githubPRComment {
       comment {content('PR builder ${BUILD_NUMBER} ${BUILD_STATUS}')}
       statusVerifier {buildStatus("FAILURE")}
       errorHandler {buildStatus("UNSTABLE")}
     }
-  }
+  
 }
