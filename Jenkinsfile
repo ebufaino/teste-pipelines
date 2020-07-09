@@ -35,7 +35,7 @@ pipeline {
     }
     success {
       sh 'echo sucesso'
-      step([$class: 'GitHubCommitStatusSetter'])
+      githubPRComment comment: githubPRMessage('Build ${BUILD_NUMBER} ${BUILD_STATUS}')
       
       
     }
