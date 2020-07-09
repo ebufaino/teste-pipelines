@@ -34,7 +34,7 @@ pipeline {
       echo 'One way or another, I have finished'
     }
     success {
-      githubPRComment comment: githubPRMessage('Build ${BUILD_NUMBER} ${BUILD_STATUS}')
+      githubPRComment comment: githubPRMessage('Build ${BUILD_NUMBER} ${BUILD_STATUS}'), statusVerifier: allowRunOnStatus('SUCCESS')
       
       
     }
