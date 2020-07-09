@@ -29,16 +29,11 @@ pipeline {
        
  } 
   	   
-  post {
-    always {
-      echo 'One way or another, I have finished'
+  publishers {
+    githubPRComment {
+      comment {content('PR builder ${BUILD_NUMBER} ${BUILD_STATUS}')}
+      statusVerifier {buildStatus("FAILURE")}
+      errorHandler {buildStatus("UNSTABLE")}
     }
-    success {
-      sh 'echo sucesso'
-      githubPRComment comment: githubPRMessage('Build ${BUILD_NUMBER} ${BUILD_STATUS}')
-      
-      
-    }
-    
   }
 }
