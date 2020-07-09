@@ -15,7 +15,7 @@ pipeline {
        stage('CheckOut') {
         steps {
           checkout scm	
-	  step([$class: 'GitHubSetCommitStatusBuilder'])	
+	  	
         }
        }
 
@@ -35,6 +35,7 @@ pipeline {
     }
     success {
       sh 'echo sucesso'
+      step([$class: 'GitHubCommitStatusSetter'])
       
       
     }
