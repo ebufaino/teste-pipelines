@@ -34,7 +34,7 @@ pipeline {
       echo 'One way or another, I have finished'
     }
     success {
-      githubPRComment comment: githubPRMessage('Build ${BUILD_NUMBER} ${BUILD_STATUS}'), errorHandler: statusOnPublisherError('FAILURE'), statusVerifier: allowRunOnStatus('SUCCESS')
+      githubPRStatusPublisher statusMsg: githubPRMessage('${GITHUB_PR_COND_REF} run ended'), statusVerifier: allowRunOnStatus('SUCCESS'), unstableAs: 'SUCCESS'
       
       
     }
