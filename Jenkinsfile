@@ -34,7 +34,7 @@ pipeline {
     }
     success {
       sh 'echo sucesso'
-      githubPRComment comment: githubPRMessage('Build ${BUILD_NUMBER} ${BUILD_STATUS}'), statusVerifier: allowRunOnStatus('SUCCESS')
+      
     }
     
   }
