@@ -35,7 +35,7 @@ pipeline {
       	    
     }
     success {
-      step([$class: 'GhprbPullRequestMerge', allowMergeWithoutTriggerPhrase: false, deleteOnMerge: false, disallowOwnCode: false, failOnNonMerge: false, mergeComment: '', onlyAdminsMerge: false])
+      step([$class: 'GitHubCommitStatusSetter'])
     }
     unstable {
       step([$class: 'GitHubCommitStatusSetter'])
