@@ -37,7 +37,7 @@ pipeline {
     }
     success {
       step([$class: 'GitHubCommitStatusSetter'])
-      githubPRComment comment: githubPRMessage('Build ${BUILD_NUMBER} ${BUILD_STATUS}'), statusVerifier: allowRunOnStatus('SUCCESS')	    
+      githubPRComment comment: githubPRMessage('Build ${BUILD_NUMBER} ${BUILD_STATUS}'), errorHandler: statusOnPublisherError('FAILURE')	    
     }
     unstable {
       step([$class: 'GitHubCommitStatusSetter'])
