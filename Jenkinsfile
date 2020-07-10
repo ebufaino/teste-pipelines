@@ -14,17 +14,17 @@ pipeline {
     stages {
        stage('CheckOut') {
         steps {
-          checkout scm	
+          checkout scm
+	  step([$class: 'GitHubSetCommitStatusBuilder'])	
 	  	
         }
        }
 
        stage('Analise codigo') {
 	     
-            steps {
-		step([$class: 'GitHubSetCommitStatusBuilder'])    
+            steps {    
                 sh 'ls -la'
-		sleep time: 1, unit: 'MINUTES'
+		sleep time: 2, unit: 'MINUTES'
 		    
 		    
             }
@@ -42,10 +42,7 @@ pipeline {
       step([$class: 'GitHubCommitStatusSetter'])
       
     }
-    unstable {
-      step([$class: 'GitHubCommitStatusSetter'])
-      
-    }
+    
     failure {
       step([$class: 'GitHubCommitStatusSetter'])
          
