@@ -22,7 +22,7 @@ pipeline {
        stage('Analise codigo') {
 	     
             steps {
-                step([$class: 'GitHubCommitStatusSetter'])
+                sh '
             }
        }  
       
