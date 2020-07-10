@@ -22,7 +22,8 @@ pipeline {
        stage('Analise codigo') {
 	     
             steps {
-                sh '
+                sh ''
+		sh '    
             }
        }  
       
