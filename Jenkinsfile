@@ -37,15 +37,15 @@ pipeline {
     }
     success {
       step([$class: 'GitHubCommitStatusSetter'])
-      githubPRComment comment: githubPRMessage('Build ${BUILD_NUMBER} ${BUILD_STATUS}')	    
+      githubPRComment comment: githubPRMessage('Build ${BUILD_NUMBER} ${BUILD_STATUS}'), statusVerifier: allowRunOnStatus('SUCCESS')	    
     }
     unstable {
       step([$class: 'GitHubCommitStatusSetter'])
-      githubPRComment comment: githubPRMessage('Build ${BUILD_NUMBER} ${BUILD_STATUS}')	    
+      
     }
     failure {
       step([$class: 'GitHubCommitStatusSetter'])
-      githubPRComment comment: githubPRMessage('Build ${BUILD_NUMBER} ${BUILD_STATUS}')    
+         
     }
     changed {
       echo 'Things were different before...'
