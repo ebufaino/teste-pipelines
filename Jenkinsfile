@@ -22,8 +22,8 @@ pipeline {
        stage('Analise codigo') {
 	     
             steps {
-                sh ''
-		sh '    
+                sh 'ls -la'
+		    
             }
        }  
       
@@ -37,13 +37,15 @@ pipeline {
     }
     success {
       step([$class: 'GitHubCommitStatusSetter'])
+      githubPRComment comment: githubPRMessage('Build ${BUILD_NUMBER} ${BUILD_STATUS}')	    
     }
     unstable {
       step([$class: 'GitHubCommitStatusSetter'])
+      githubPRComment comment: githubPRMessage('Build ${BUILD_NUMBER} ${BUILD_STATUS}')	    
     }
     failure {
       step([$class: 'GitHubCommitStatusSetter'])
-      step([$class: 'GitHubIssueNotifier', issueAppend: true, issueBody: '', issueLabel: '', issueReopen: true, issueRepo: '', issueTitle: ''])	    
+      githubPRComment comment: githubPRMessage('Build ${BUILD_NUMBER} ${BUILD_STATUS}')    
     }
     changed {
       echo 'Things were different before...'
