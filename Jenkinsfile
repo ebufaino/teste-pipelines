@@ -24,7 +24,7 @@ pipeline {
 	     
             steps {    
                 sh 'ls -la'
-		sleep time: 2, unit: 'MINUTES'
+		sleep time: 1, unit: 'MINUTES'
 		    
 		    
             }
