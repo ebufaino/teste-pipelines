@@ -22,7 +22,7 @@ pipeline {
        stage('Analise codigo') {
 	     
             steps {
-                sh 'ls -la'
+                sh 'ls -la
 		    
             }
        }  
