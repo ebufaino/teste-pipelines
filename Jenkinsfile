@@ -22,7 +22,10 @@ pipeline {
        stage('Analise codigo') {
 	     
             steps {
-                sh 'ls -la
+		step([$class: 'GitHubSetCommitStatusBuilder'])    
+                sh 'ls -la'
+		sleep time: 1, unit: 'MINUTES'
+		    
 		    
             }
        }  
