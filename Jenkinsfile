@@ -23,9 +23,11 @@ pipeline {
 	     
             steps {
                 
-		echo "o nome da branch é: ${GIT_BRANCH}"    
+		echo "o nome da branch é: ${BRANCH_NAME}"    
             }
-       }  
+       } 
+	    
+       	    
       
        
  } 
