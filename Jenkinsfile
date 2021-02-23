@@ -22,7 +22,7 @@ pipeline {
        stage('Analise codigo') {
 	     
             steps {
-                step([$class: 'GitHubCommitStatusSetter'])
+                
 		sh "echo o nome da branch é: '${BRANCH_NAME}'"    
             }
        }  
