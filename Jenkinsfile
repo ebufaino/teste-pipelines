@@ -28,9 +28,9 @@ pipeline {
        } 
         
 	    stage('Build Docker') {
-		    environment {	    
-		             TAGNAME = $(cut -s -d "/" -f1- ${BRANCH_NAME} --output-delimiter="-")
-			    }
+		    environment {
+                      TAGNAME = "${GIT_BRANCH.split("/")[1]}"
+                    }
 		    steps {
 			    	    
 			    echo "tagname é: ${TAGNAME}"	    
