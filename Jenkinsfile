@@ -28,13 +28,18 @@ pipeline {
        } 
         
 	    stage('Build Docker') {
-		   // environment {
-                   //   TAGNAME = "${GIT_BRANCH.split("/")[1]}"
-                   // }
+		    environment {
+                      TAGNAME = "${GIT_BRANCH.split("/")[1]}"
+                    }
 		    steps {
+			    script {
+				    def TAGNAME = ${BRANCH_NAME}
+                                    TAGNAME = TAGNAME.replaceAll("/", "-")       
+                                    
+                            }
 			    
 			    	    
-			    println "tagname é: '${BRANCH_NAME}.replace("/", "-")'"	    
+			    echo "tagname é: ${TAGNAME}"
 		    	    //step([$class: 'DockerBuilderPublisher', cleanImages: true, cleanupWithJenkinsJobDelete: false, cloud: 'docker-sme', dockerFileDirectory: '', fromRegistry: [credentialsId: 'github-new', url: 'registry.sme.prefeitura.sp.gov.br'], noCache: true, pushCredentialsId: '', pushOnSuccess: false, tagsString: '${BUILD_ID}/sgp-api:latest'])
 		    }			    
 	    
