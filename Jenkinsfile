@@ -23,33 +23,12 @@ pipeline {
 	     
             steps {
                 step([$class: 'GitHubCommitStatusSetter'])
+		sh "echo o nome da branch é: '${BRANCH_NAME}'"    
             }
        }  
       
        
  } 
   	   
-  post {
-    always {
-      echo 'One way or another, I have finished'
-      	    
-    }
-    success {
-      step([$class: 'GitHubCommitStatusSetter'])
-    }
-    unstable {
-      step([$class: 'GitHubCommitStatusSetter'])
-    }
-    failure {
-      step([$class: 'GitHubCommitStatusSetter'])
-      step([$class: 'GitHubIssueNotifier', issueAppend: true, issueBody: '', issueLabel: '', issueReopen: true, issueRepo: '', issueTitle: ''])	    
-    }
-    changed {
-      echo 'Things were different before...'
-    }
-    aborted {
-      step([$class: 'GitHubCommitStatusSetter'])
-    }
-  }
   
 }
