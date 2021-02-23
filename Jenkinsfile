@@ -32,16 +32,9 @@ pipeline {
                    //   TAGNAME = "${GIT_BRANCH.split("/")[1]}"
                    // }
 		    steps {
-			    // Git committer email
-                         script {
-                             TAGNAME = sh (
-				     script: 'cut -s -d"/" -f1- ${BRANCH_NAME} --output-delimiter="-"',
-                             returnStdout: true
-                                ).trim()
-                          }
-                             echo "teste é igual : ${TAGNAME}"
+			    
 			    	    
-			    echo "tagname é: ${TAGNAME}"	    
+			    println "tagname é: '${BRANCH_NAME}.replace("/", "-")'"	    
 		    	    //step([$class: 'DockerBuilderPublisher', cleanImages: true, cleanupWithJenkinsJobDelete: false, cloud: 'docker-sme', dockerFileDirectory: '', fromRegistry: [credentialsId: 'github-new', url: 'registry.sme.prefeitura.sp.gov.br'], noCache: true, pushCredentialsId: '', pushOnSuccess: false, tagsString: '${BUILD_ID}/sgp-api:latest'])
 		    }			    
 	    
