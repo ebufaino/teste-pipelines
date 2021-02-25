@@ -33,8 +33,8 @@ pipeline {
               jobId: "541b688a-fad2-499a-9c4d-56c8ffc4cff2",
               nodeFilters: "",
               options: """
-                    buildNumber=$BUILD_NUMBER
-                    branchName=$BRANCH_NAME
+                    RD_buildNumber=$BUILD_NUMBER
+                    RD_branchName=$BRANCH_NAME
                
                    """,
               rundeckInstance: "Rundeck-SME",
