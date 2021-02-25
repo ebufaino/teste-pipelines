@@ -22,8 +22,7 @@ pipeline {
        
         stage('Build') {
       steps {
-        git branch: "${params.BRANCH}", url: 'https://github.com/jenkinsci/git-parameter-plugin.git'
-        sh "echo o nome da branch é: '${params.BRANCH}'"
+        sh "echo o nome da branch é: '$BRANCH_NAME'"
         script {
             step([$class: "RundeckNotifier",
               includeRundeckLogs: true,
@@ -31,7 +30,7 @@ pipeline {
               nodeFilters: "",
               options: """
                     buildNumber=$BUILD_NUMBER
-                    branchName=${params.BRANCH}
+                    branchName=$BRANCH_NAME
                
                    """,
               rundeckInstance: "Rundeck-SME",
