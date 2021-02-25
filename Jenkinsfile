@@ -19,36 +19,29 @@ pipeline {
         }
        }
 
-       stage('Analise codigo') {
-	     
-            steps {
-                
-		echo "o nome da branch é: ${BRANCH_NAME}"    
-            }
-       } 
-        
-	    stage('Build Docker') {
-		    environment {
-                      TAGNAME = "${GIT_BRANCH.split("/")[1]}"
-                    }
-		    steps {
-			    script {
-				    def TAGNAME = ${BRANCH_NAME}
-                                    TAGNAME = TAGNAME.replaceAll("/", "-")       
-                                    
-                            }
-			    
-			    	    
-			    echo "tagname é: ${TAGNAME}"
-		    	    //step([$class: 'DockerBuilderPublisher', cleanImages: true, cleanupWithJenkinsJobDelete: false, cloud: 'docker-sme', dockerFileDirectory: '', fromRegistry: [credentialsId: 'github-new', url: 'registry.sme.prefeitura.sp.gov.br'], noCache: true, pushCredentialsId: '', pushOnSuccess: false, tagsString: '${BUILD_ID}/sgp-api:latest'])
-		    }			    
-	    
-	    }
-		    
-	    
-       	    
-      
        
+        stage('Build') {
+      steps {
+        git branch: "${params.BRANCH}", url: 'https://github.com/jenkinsci/git-parameter-plugin.git'
+        sh "echo o nome da branch é: '${params.BRANCH}'"
+        script {
+            step([$class: "RundeckNotifier",
+              includeRundeckLogs: true,
+              jobId: "541b688a-fad2-499a-9c4d-56c8ffc4cff2",
+              nodeFilters: "",
+              options: """
+                    buildNumber=$BUILD_NUMBER
+                    branchName=${params.BRANCH}
+               
+                   """,
+              rundeckInstance: "Rundeck-SME",
+              shouldFailTheBuild: true,
+              shouldWaitForRundeckJob: true,
+              tags: "",
+              tailLog: true])
+           }
+        }
+      }    
  } 
   	   
   
