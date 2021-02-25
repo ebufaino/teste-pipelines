@@ -1,9 +1,7 @@
 pipeline {
     agent {
-      node { 
-        label 'py-uniformes'
-	    }
-    }
+        label 'master'
+        }
     
     options {
       buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
