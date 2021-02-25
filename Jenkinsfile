@@ -22,7 +22,8 @@ pipeline {
        
         stage('Build') {
       steps {
-	      sh "echo o nome da branch é: '${BRANCH_NAME,,}'"
+	      sh "echo o nome da branch é: '$BRANCH_NAME'"
+	      sh 'BRANCH_NAME=$(echo ${BRANCH_NAME,,})
         script {
             step([$class: "RundeckNotifier",
               includeRundeckLogs: true,
