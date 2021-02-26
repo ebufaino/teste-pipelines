@@ -32,7 +32,7 @@ pipeline {
               nodeFilters: "",
               options: """
                     buildNumber=$BUILD_NUMBER
-                    eduteste=$BRANCH_NAME
+                    branchName=$BRANCH_NAME
                
                    """,
               rundeckInstance: "Rundeck-SME",
