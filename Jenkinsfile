@@ -20,7 +20,7 @@ pipeline {
        
         stage('Build') {
          		
-		when { not {branch 'PR*'}}	
+		when { anyOf { branch 'master'; branch 'story*'; branch 'development';  } }	
          steps {
 	      sh "echo o nome da branch é: '$BRANCH_NAME'"
 	      
