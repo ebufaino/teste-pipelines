@@ -19,6 +19,7 @@ pipeline {
 
        
         stage('Build') {
+         def BRANCH_NAME = BRANCH_NAME.toLowerCase()		
 	 when { branch pattern: "story-\\d+", comparator: "REGEXP"}	
          steps {
 	      sh "echo o nome da branch é: '$BRANCH_NAME'"
