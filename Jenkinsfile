@@ -13,14 +13,14 @@ pipeline {
        stage('CheckOut') {
         steps {
           checkout scm	
-	  def BRANCH_NAME = BRANCH_NAME.toLowerCase()	
+	  	
         }
        }
 
        
         stage('Build') {
          		
-	 when { branch pattern: "story-\\d+", comparator: "REGEXP"}	
+	 when { branch pattern: "Story-\\d+", comparator: "REGEXP"}	
          steps {
 	      sh "echo o nome da branch é: '$BRANCH_NAME'"
 	      
