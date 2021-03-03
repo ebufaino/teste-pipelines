@@ -20,7 +20,7 @@ pipeline {
        
         stage('Build') {
          		
-	 when { branch pattern: "Story-\\d+", comparator: "REGEXP"}	
+	 when { branch 'Story/*'}	
          steps {
 	      sh "echo o nome da branch é: '$BRANCH_NAME'"
 	      
