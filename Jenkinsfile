@@ -20,7 +20,7 @@ pipeline {
        
         stage('Build') {
          		
-	 when { branch 'Story/*'}	
+		when { not {branch 'pr-*/*'}}	
          steps {
 	      sh "echo o nome da branch é: '$BRANCH_NAME'"
 	      
