@@ -22,7 +22,7 @@ pipeline {
          		
 		when { anyOf { branch 'master'; branch 'story*'; branch 'development';  } }	
          steps {
-	      sh "echo o nome da branch é: '$BRANCH_NAME'"
+	      sh "Branch utilizada é '$BRANCH_NAME'"
 	      
         script {
 	    def BRANCH_NAME = BRANCH_NAME.toLowerCase()
