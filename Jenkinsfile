@@ -22,10 +22,10 @@ pipeline {
          		
 		when { anyOf { branch 'master'; branch "story/*"; branch 'development'; branch 'release';  } }	
          steps {
-	      sh "Branch utilizada é '$BRANCH_NAME'"
+	     
 	      
         script {
-	    def BRANCH_NAME = BRANCH_NAME.toLowerCase()
+	    def BRANCH_NAME = env.BRANCH_NAME.toLowerCase()
 		
             step([$class: "RundeckNotifier",
               includeRundeckLogs: true,
