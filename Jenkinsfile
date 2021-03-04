@@ -20,7 +20,7 @@ pipeline {
        
         stage('Build') {
          		
-		when { anyOf { branch 'master'; branch 'story*'; branch 'development'; branch 'release';  } }	
+		when { anyOf { branch 'master'; branch "story/*"; branch 'development'; branch 'release';  } }	
          steps {
 	      sh "Branch utilizada é '$BRANCH_NAME'"
 	      
