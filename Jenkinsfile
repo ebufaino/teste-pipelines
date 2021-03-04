@@ -21,12 +21,12 @@ pipeline {
         stage('Build') {
          		
 		when { anyOf { branch 'master'; branch "story/*"; branch 'development'; branch 'release';  } }	
-         steps {
+        steps {
 	     
 	      
         script {
 	    def BRANCH_NAME = env.BRANCH_NAME.toLowerCase()
-		
+	    echo "Utilizando branch $BRANCH_NAME"	
             step([$class: "RundeckNotifier",
               includeRundeckLogs: true,
               jobId: "541b688a-fad2-499a-9c4d-56c8ffc4cff2",
