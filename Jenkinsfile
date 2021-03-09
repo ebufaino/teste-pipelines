@@ -25,7 +25,7 @@ pipeline {
 	     
 	      
         script {
-	    def BRANCH_NAME = env.BRANCH_NAME.toLowerCase()
+	    def BRANCH_NAME = env.BRANCH_NAME
 	    def gitUrl = sh(returnStdout: true, script: 'git config remote.origin.url').trim()
 		
 	    echo "Utilizando branch $BRANCH_NAME"
