@@ -20,13 +20,16 @@ pipeline {
        
         stage('Build') {
          		
-		when { not {branch 'PR*'}}	
-         steps {
-	      sh "echo o nome da branch é: '$BRANCH_NAME'"
+		when { anyOf { branch 'master'; branch "story/*"; branch 'development'; branch 'release';  } }	
+        steps {
+	     
 	      
         script {
-	    def BRANCH_NAME = BRANCH_NAME.toLowerCase()
+	    def BRANCH_REPO = env.BRANCH_NAME.toLowerCase()
+	    def BRANCH_NAME = env.BRANCH_NAME	
+	    def GIT_URL = sh(returnStdout: true, script: 'git config remote.origin.url').trim()
 		
+	    	
             step([$class: "RundeckNotifier",
               includeRundeckLogs: true,
               jobId: "541b688a-fad2-499a-9c4d-56c8ffc4cff2",
@@ -34,6 +37,8 @@ pipeline {
               options: """
                     buildNumber=$BUILD_NUMBER
                     branchName=$BRANCH_NAME
+		    gitUrl=$GIT_URL
+		    branchRepo=$BRANCH_REPO
                
                    """,
               rundeckInstance: "Rundeck-SME",
