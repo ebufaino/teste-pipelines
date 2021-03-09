@@ -25,8 +25,9 @@ pipeline {
 	     
 	      
         script {
-	    def BRANCH_NAME = env.BRANCH_NAME
-	    def gitUrl = sh(returnStdout: true, script: 'git config remote.origin.url').trim()
+	    def BRANCH_REPO = env.BRANCH_NAME.toLowerCase()
+	    def BRANCH_NAME = env.BRANCH_NAME	
+	    def GIT_URL = sh(returnStdout: true, script: 'git config remote.origin.url').trim()
 		
 	    echo "Utilizando branch $BRANCH_NAME"
             echo "Url: $gitUrl"		
@@ -37,6 +38,8 @@ pipeline {
               options: """
                     buildNumber=$BUILD_NUMBER
                     branchName=$BRANCH_NAME
+		    gitUrl=$GIT_URL
+		    branchRepo=$BRANCH_REPO
                
                    """,
               rundeckInstance: "Rundeck-SME",
