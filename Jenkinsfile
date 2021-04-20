@@ -19,8 +19,8 @@ pipeline {
 
        stage('Test API Rest') {
         steps {
-          withCredentials([file(credentialsId: 'dev-newman-sgp', variable: 'dev-newman-sgp')]) {
-               sh 'cp $dev-newman-sgp testes/Dev.json'
+          withCredentials([file(credentialsId: 'dev-newman-sgp', variable: 'DEVNEWMANSGP')]) {
+               sh 'cp $DEVNEWMAN testes/Dev.json'
             
                sh 'newman run testes/collection.json -e Dev.json -r junit,html --reporter-junit-export var/reports/newman/junit/newman.xml --reporter-html-export var/reports/newman/html/index.html'
 
