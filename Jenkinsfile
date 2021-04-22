@@ -23,7 +23,7 @@ pipeline {
                sh 'cp $DEVNEWMANSGP testes/Dev.json'
                sh 'newman run testes/collection.json -e testes/Dev.json'
                
-               publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportFiles: 'index.html', reportName: 'Newman API Test', reportTitles: ''])
+               publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '', reportFiles: 'index.html', reportName: 'Newman API Test', reportTitles: ''])
                
          }
         }
