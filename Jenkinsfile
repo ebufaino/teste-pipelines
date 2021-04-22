@@ -18,9 +18,11 @@ pipeline {
        }
 
        stage('Test API Rest') {
-         def BRANCH_REPO = env.BRANCH_NAME.toLowerCase()
+         
         steps {
-          
+          script {
+            def BRANCH_REPO = env.BRANCH_NAME.toLowerCase()
+          }
           withCredentials([file(credentialsId: 'dev-newman-sgp', variable: 'DEVNEWMANSGP')]) {
                sh 'cp $DEVNEWMANSGP testes/Dev.json'
                sh 'newman run testes/collection.json -e testes/Dev.json -r htmlextra --reporter-htmlextra-export ./results/report.html'
