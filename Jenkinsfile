@@ -1,6 +1,7 @@
 pipeline {
     agent {
         label 'dockerdotnet2'
+        reuseNode true 
         }
     
     options {
@@ -37,11 +38,15 @@ pipeline {
 
        stage('Test2') {
                    agent {
-                        docker { image 'node:10-alpine' }
+                        docker { 
+                          image 'node:10-alpine'
+                          reuseNode true 
+                        
+                        }
                     }
 
                     steps {
-                        sh 'npm run test'
+                        sh 'ls -la'
                     }
 
        } 
