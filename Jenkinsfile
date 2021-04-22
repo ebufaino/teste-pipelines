@@ -41,7 +41,7 @@ pipeline {
                     }
 
                     steps {
-                        sh 'newman run https://www.getpostman.com/collections/8a0c9bc08f062d12dcda'
+                        sh 'newman run testes/collection.json'
                     }
                 }
 
