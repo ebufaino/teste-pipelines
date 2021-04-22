@@ -22,7 +22,7 @@ pipeline {
         steps {
           script {
             BRANCH_REPO = env.BRANCH_NAME.toLowerCase()
-            idCredencial = newman-sgp_${BRANCH_REPO}
+            idCredencial = ${BRANCH_REPO}_NEWMANSGP
           }
           withCredentials([file(credentialsId: 'dev-newman-sgp', variable: 'DEVNEWMANSGP')]) {
                sh 'cp $DEVNEWMANSGP testes/Dev.json'
