@@ -36,7 +36,11 @@ pipeline {
        }
 
        stage('Test2') {
-                    
+                   agent {
+                      docker {
+                          image 'postman/newman_ubuntu1404'
+                          args '-i --entrypoint='
+                      } 
 
                     steps {
                       
