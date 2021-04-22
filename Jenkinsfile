@@ -37,11 +37,11 @@ pipeline {
 
        stage('Test2') {
                     agent {
-                        docker { image 'node:10-alpine' }
+                        docker { image 'postman/newman_ubuntu1404' }
                     }
 
                     steps {
-                        sh 'npm run test'
+                        sh 'run https://www.getpostman.com/collections/8a0c9bc08f062d12dcda'
                     }
                 }
 
