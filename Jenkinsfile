@@ -1,7 +1,6 @@
 pipeline {
     agent {
-        label 'dockerdotnet2'
-        reuseNode true 
+        label 'dockerdotnet' 
         }
     
     options {
