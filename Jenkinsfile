@@ -40,7 +40,7 @@ pipeline {
 
                     steps {
                       
-                        sh 'newman '
+                  
                     
                     script {
                     img = docker.build("postman/newman_ubuntu1404")
