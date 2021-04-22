@@ -35,6 +35,16 @@ pipeline {
         }
        }
 
+       stage('Test2') {
+                    agent {
+                        docker { image 'node:10-alpine' }
+                    }
+
+                    steps {
+                        sh 'npm run test'
+                    }
+                }
+
         
  } 
   	   
