@@ -21,7 +21,6 @@ pipeline {
         steps {
           withCredentials([file(credentialsId: 'dev-newman-sgp', variable: 'DEVNEWMANSGP')]) {
                sh 'cp $DEVNEWMANSGP testes/Dev.json'
-               sh 'npm install -g newman-reporter-htmlextra'
                sh 'newman run testes/collection.json -e testes/Dev.json'
                
                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'var/reports/newman/html', reportFiles: 'index.html', reportName: 'Newman API Test', reportTitles: ''])
