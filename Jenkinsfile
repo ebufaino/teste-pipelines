@@ -25,7 +25,7 @@ pipeline {
             
           }
           withCredentials([file(credentialsId: 'dev-newman-sgp', variable: 'NEWMANSGPMASTER')]) {
-               sh 'cp $NEWMANSGP'${BRANCH_REPO}' testes/Dev.json'
+               sh 'cp $NEWMANSGP"${BRANCH_REPO}" testes/Dev.json'
                sh 'newman run testes/collection.json -e testes/Dev.json -r htmlextra --reporter-htmlextra-export ./results/report.html'
                echo "nome da branch é : ${BRANCH_REPO}"
                
