@@ -37,24 +37,12 @@ pipeline {
 
        stage('Test2') {
                    agent {
-                      docker {
-                          image 'postman/newman_ubuntu1404'
-                          args '-i --entrypoint='
-                      } 
+                        docker { image 'node:10-alpine' }
+                    }
 
                     steps {
-                      
-                  
-                    
-                    script {
-                    img = docker.build("postman/newman_ubuntu1404")
-                    
-                    img.inside('--entrypoint= -e NODE_ENV=test') {
-                        sh 'run testes/collection.json'
-                        
-                    }                   
-                }
-                }
+                        sh 'npm run test'
+                    }
 
        } 
  } 
