@@ -21,7 +21,7 @@ pipeline {
         steps {
           withCredentials([file(credentialsId: 'dev-newman-sgp', variable: 'DEVNEWMANSGP')]) {
                sh 'cp $DEVNEWMANSGP testes/Dev.json'
-               sh 'newman run testes/collection.json -e testes/Dev.json htmlextra --reporter-htmlextra-export ./results/report.html'
+               sh 'newman run testes/collection.json -e testes/Dev.json -r htmlextra --reporter-htmlextra-export ./results/report.html'
                
                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'results', reportFiles: 'report.html', reportName: 'HTML Report', reportTitles: ''])
                
