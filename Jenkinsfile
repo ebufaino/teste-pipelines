@@ -37,6 +37,7 @@ pipeline {
            */
           reuseNode true
           image 'postman/newman:alpine'
+          args '--entrypoint=""'
         }
       }
 
