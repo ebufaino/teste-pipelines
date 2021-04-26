@@ -36,7 +36,7 @@ pipeline {
            * Pipeline, but run inside a container.
            */
           reuseNode true
-          image 'postman/newman'
+          image 'smedotnetnewman:latest'
         }
       }
 
