@@ -53,7 +53,7 @@ pipeline {
         
         withCredentials([file(credentialsId: 'dev-newman-sgp', variable: 'NEWMANSGPDEV')]) {
                sh 'cp $NEWMANSGPDEV testes/Dev.json'
-               sh 'npm install -g newman-reporter-htmlextra'
+               sh 'npm install -S newman-reporter-htmlextra'
                sh 'newman run testes/collection.json -e testes/Dev.json -r htmlextra --reporter-htmlextra-export ./results/report.html'
                
                
