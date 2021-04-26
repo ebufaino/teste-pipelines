@@ -28,6 +28,7 @@ pipeline {
                sh 'cp $NEWMANSGPDEV testes/Dev.json'
                sh 'newman run testes/collection.json -e testes/Dev.json -r htmlextra --reporter-htmlextra-export ./results/report.html'
                echo "nome da branch é : ${BRANCH_REPO}"
+               sh 'ls -la htmlreports/HTML_20Report/'
                
                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'results', reportFiles: 'report.html', reportName: 'HTML Report', reportTitles: ''])
                
@@ -35,20 +36,7 @@ pipeline {
         }
        }
 
-       stage('Test2') {
-                   agent {
-                        docker { 
-                          image 'node:10-alpine'
-                          reuseNode true 
-                        
-                        }
-                    }
-
-                    steps {
-                        sh 'ls -la'
-                    }
-
-       } 
+        
  } 
   	   
   
