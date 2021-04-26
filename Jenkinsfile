@@ -51,6 +51,7 @@ pipeline {
 
       steps {
         sh 'ls -la'
+        sh 'newman run testes/collection.json'
 
       }
     }
