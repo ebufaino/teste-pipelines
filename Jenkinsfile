@@ -1,43 +1,32 @@
 pipeline {
-    agent {
-        label 'dockerdotnet2' 
+  agent any
+
+  stages {
+    stage('NPM install') {
+      agent {
+        docker {
+          /*
+           * Reuse the workspace on the agent defined at top-level of
+           * Pipeline, but run inside a container.
+           */
+          reuseNode true
+          image 'node:12.16.1'
         }
-    
-    options {
-      buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
-      disableConcurrentBuilds()
-      skipDefaultCheckout()  
+      }
+
+      environment {
+        /*
+         * Change HOME, because default is usually root dir, and
+         * Jenkins user may not have write permissions in that dir.
+         */
+        HOME = "${WORKSPACE}"
+      }
+
+      steps {
+        sh 'env | sort'
+        sh 'npm install'
+        sh 'ls -la && PWD'
+      }
     }
-        
-    stages {
-       stage('CheckOut') {
-        steps {
-          checkout scm	
-	  	
-        }
-       }
-
-       stage('Test API Rest') {
-         
-        steps {
-          script {
-            BRANCH_REPO = env.BRANCH_NAME.toLowerCase()
-            
-          }
-          withCredentials([file(credentialsId: 'dev-newman-sgp', variable: 'NEWMANSGPDEV')]) {
-               sh 'cp $NEWMANSGPDEV testes/Dev.json'
-               sh 'newman run testes/collection.json -e testes/Dev.json -r htmlextra --reporter-htmlextra-export ./results/report.html'
-               echo "nome da branch é : ${BRANCH_REPO}"
-               
-               
-               publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'results', reportFiles: 'report.html', reportName: 'HTML Report', reportTitles: ''])
-               
-         }
-        }
-       }
-
-        
- } 
-  	   
-  
+  } 
 }
