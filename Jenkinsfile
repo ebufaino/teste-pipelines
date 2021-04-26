@@ -1,5 +1,5 @@
 pipeline {
-  agent none
+  agent any
 
   stages {
     stage('NPM install') {
@@ -36,7 +36,7 @@ pipeline {
            * Pipeline, but run inside a container.
            */
           reuseNode true
-          image 'smedotnetnewman:latest'
+          image 'postman/newman:alpine'
         }
       }
 
