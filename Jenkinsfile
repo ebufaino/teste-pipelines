@@ -24,7 +24,6 @@ pipeline {
 
       steps {
         sh 'env | sort'
-        sh 'npm install'
         sh 'ls -la'
       }
     }
