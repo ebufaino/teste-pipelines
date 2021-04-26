@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'dockerdotnet' 
+        label 'dockerdotnet2' 
         }
     
     options {
@@ -26,7 +26,7 @@ pipeline {
           }
           withCredentials([file(credentialsId: 'dev-newman-sgp', variable: 'NEWMANSGPDEV')]) {
                sh 'cp $NEWMANSGPDEV testes/Dev.json'
-               sh 'newman run testes/collection.json -e testes/Dev.json -r htmlextra'
+               sh 'newman run testes/collection.json -e testes/Dev.json -r htmlextra --reporter-htmlextra-export ./results/report.html'
                echo "nome da branch é : ${BRANCH_REPO}"
                
                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'results', reportFiles: 'report.html', reportName: 'HTML Report', reportTitles: ''])
