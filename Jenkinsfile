@@ -57,11 +57,12 @@ pipeline {
         sh 'npm build'
       }
     }
-    stage('Build') {
-      steps {
-        cleanWs()
-      }
+    
     }
-    }
+  post { 
+        always { 
+            cleanWs()
+        }
+    }  
     
   }
