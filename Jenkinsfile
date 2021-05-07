@@ -14,7 +14,7 @@ pipeline {
         }
       }
       steps {
-            sh 'whoami'
+            
             sh 'node --version'
             sh 'npm --version'
             sh 'npm config list'
