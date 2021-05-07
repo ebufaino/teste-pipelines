@@ -2,8 +2,7 @@ pipeline {
   agent {
     docker {
         image 'node:16-alpine'
-        label 'my-defined-label'
-        args  '-v /tmp:/tmp'
+        
     }
   }
 
