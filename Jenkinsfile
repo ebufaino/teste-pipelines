@@ -9,6 +9,13 @@ stages {
             image 'node:16-alpine'
           }
        }
+        environment {
+        /*
+         * Change HOME, because default is usually root dir, and
+         * Jenkins user may not have write permissions in that dir.
+         */
+        HOME = "${WORKSPACE}"
+      }
        steps {
             sh 'whoami'
             sh 'ls -la'
