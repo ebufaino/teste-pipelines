@@ -6,24 +6,15 @@ pipeline {
     }
   }
 
-  environment {
-        /*
-         * Change HOME, because default is usually root dir, and
-         * Jenkins user may not have write permissions in that dir.
-         */
-        HOME = "${WORKSPACE}"
-      }
+
 
   stages {
-    stage('CheckOut') {
-        steps {
-          checkout scm  
-        }
-       }
-       
+    
+
     stage('Prepare') {
        steps {
             sh 'whoami'
+            sh 'ls -la'
             sh 'node --version'
             sh 'npm --version'
             sh 'npm i eslint'
