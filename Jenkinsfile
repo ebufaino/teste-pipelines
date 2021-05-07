@@ -26,11 +26,7 @@ pipeline {
             sh 'npm --version'
             sh 'npm config list'
           }
-          post {
-            always {
-              updateGitlabCommitStatus name: 'jenkins-build', state: 'running'
-            }
-          }
+          
         }
     
     stage('Build') {
