@@ -3,6 +3,16 @@ pipeline {
 
   stages {
     stage('Prepare') {
+      agent {
+        docker {
+          /*
+           * Reuse the workspace on the agent defined at top-level of
+           * Pipeline, but run inside a container.
+           */
+          reuseNode true
+          image 'node:16-alpine'
+        }
+      }
           steps {
             sh 'whoami'
             sh 'node --version'
@@ -15,44 +25,6 @@ pipeline {
             }
           }
         }
-    
-    stage('Lint and Build') {
-      agent {
-        docker {
-          /*
-           * Reuse the workspace on the agent defined at top-level of
-           * Pipeline, but run inside a container.
-           */
-          reuseNode true
-          image 'node:16-alpine'
-        }
-      }
-          parallel {
-            // Build > Lint
-            stage('Lint') {
-              steps {
-                // catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE')
-                catchError {
-                  sh 'npm run eslint -- -f checkstyle -o eslint.xml'
-                }
-              }
-              post {
-                always {
-                  recordIssues enabledForFailure: true, tools: [esLint(id: 'eslint', name: 'ESlint ', pattern: 'eslint.xml')]
-                }
-              }
-            }
-
-            stage('Build') {
-              steps {
-                sh 'npm run build'
-              }
-            }
-          }
-    }   
-
-
-      
     
     stage('Build') {
       agent {
