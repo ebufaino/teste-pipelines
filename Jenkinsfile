@@ -1,17 +1,14 @@
 pipeline {
   agent {
-    docker {
+      docker {
+        reuseNode true
         image 'node:16-alpine'
-        
+      }
     }
-  }
 
-
-
-  stages {
-    
-
+stages {
     stage('Prepare') {
+      
        steps {
             sh 'whoami'
             sh 'ls -la'
