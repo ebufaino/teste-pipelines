@@ -15,6 +15,12 @@ pipeline {
       }
 
   stages {
+    stage('CheckOut') {
+        steps {
+          checkout scm  
+        }
+       }
+       
     stage('Prepare') {
        steps {
             sh 'whoami'
