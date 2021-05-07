@@ -16,6 +16,12 @@ pipeline {
           }
         }
     
+    stage('Install dependencies') {
+          steps {
+            sh 'npm ci'
+          }
+        }
+    
     stage('Build') {
       agent {
         docker {
