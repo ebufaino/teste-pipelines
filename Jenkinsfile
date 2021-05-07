@@ -1,55 +1,63 @@
 pipeline {
-    agent {
-        label 'dockerpython'
-        }
-    
-    options {
-      buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
-      disableConcurrentBuilds()
-      skipDefaultCheckout()  
-    }
-        
-    stages {
-       stage('CheckOut') {
-        steps {
-          checkout scm	
-	  	
-        }
-       }
+  agent any
 
-       
-        stage('Build') {
-         		
-		when { anyOf { branch 'master'; branch "story/*"; branch 'development'; branch 'release';  } }	
-        steps {
-	     
-	      
-        script {
-	    def BRANCH_REPO = env.BRANCH_NAME.toLowerCase()
-	    def BRANCH_NAME = env.BRANCH_NAME	
-	    def GIT_URL = sh(returnStdout: true, script: 'git config remote.origin.url').trim()
-		
-	    	
-            step([$class: "RundeckNotifier",
-              includeRundeckLogs: true,
-              jobId: "541b688a-fad2-499a-9c4d-56c8ffc4cff2",
-              nodeFilters: "",
-              options: """
-                    buildNumber=$BUILD_NUMBER
-                    branchName=$BRANCH_NAME
-		    gitUrl=$GIT_URL
-		    branchRepo=$BRANCH_REPO
-               
-                   """,
-              rundeckInstance: "Rundeck-SME",
-              shouldFailTheBuild: true,
-              shouldWaitForRundeckJob: true,
-              tags: "",
-              tailLog: true])
-           }
+  stages {
+    stage('NPM install') {
+      agent {
+        docker {
+          /*
+           * Reuse the workspace on the agent defined at top-level of
+           * Pipeline, but run inside a container.
+           */
+          reuseNode true
+          image 'node:12.16.1'
         }
-      }    
- } 
-  	   
-  
+      }
+
+      environment {
+        /*
+         * Change HOME, because default is usually root dir, and
+         * Jenkins user may not have write permissions in that dir.
+         */
+        HOME = "${WORKSPACE}"
+      }
+
+      steps {
+        sh 'ls -la'
+      }
+    }
+
+    stage('Testes API Rest') {
+      agent {
+        docker {
+          /*
+           * Reuse the workspace on the agent defined at top-level of
+           * Pipeline, but run inside a container.
+           */
+          reuseNode true
+          image 'dannydainton/htmlextra'
+          args '--entrypoint=""'
+        }
+      }
+
+      environment {
+        /*
+         * Change HOME, because default is usually root dir, and
+         * Jenkins user may not have write permissions in that dir.
+         */
+        HOME = "${WORKSPACE}"
+      }
+
+      steps {
+        
+        withCredentials([file(credentialsId: 'dev-newman-sgp', variable: 'NEWMANSGPDEV')]) {
+               sh 'cp $NEWMANSGPDEV testes/Dev.json'
+               sh 'newman run testes/collection.json -e testes/Dev.json -r htmlextra --reporter-htmlextra-export ./results/report.html'
+               publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'results', reportFiles: 'report.html', reportName: 'HTML Report', reportTitles: ''])
+               
+         }
+
+      }
+    }
+  } 
 }
