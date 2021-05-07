@@ -30,8 +30,8 @@ pipeline {
       
       steps {
         sh 'ls -la'
-        sh 'yarn install'
-        sh 'yarn build'
+        sh 'npm install'
+        sh 'npm build'
       }
     }
     }
