@@ -31,12 +31,12 @@ pipeline {
                   recordIssues enabledForFailure: true, tools: [esLint(id: 'eslint', name: 'ESlint ', pattern: 'eslint.xml')]
                 }
               }
-              // Build > Build
+            }
+            // Build > Build
             stage('Build') {
               steps {
                 sh 'npm run build'
               }
-            }
             }
           }
     } 
