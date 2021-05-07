@@ -7,6 +7,7 @@ pipeline {
             sh 'whoami'
             sh 'node --version'
             sh 'npm --version'
+            sh 'npm i eslint'
             sh 'npm config list'
           }
           post {
